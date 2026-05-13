@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업셀링 PF0 실험 모니터링</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'Segoe UI', sans-serif; background: #f7f8fa; color: #111827; font-size: 14px; line-height: 1.5; min-width: 1200px; }
+
+/* ─── TOP BAR ─── */
+.top-bar { background: white; color: #111827; border-bottom: 1px solid #e5e7eb; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+.top-bar h1 { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; }
+.top-bar .meta { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+.top-bar .updated { font-size: 11px; color: #9ca3af; text-align: right; line-height: 1.6; }
+
+/* ─── TIMELINE ─── */
+.timeline-bar { background: white; border-bottom: 1px solid #e5e7eb; padding: 12px 20px; }
+.timeline-inner { max-width: 1440px; margin: 0 auto; }
+.timeline-label { position: relative; height: 20px; font-size: 11px; color: #6b7280; margin-bottom: 5px; }
+.timeline-track { height: 7px; background: #e5e7eb; border-radius: 99px; position: relative; }
+.timeline-p1 { position: absolute; left: 0; width: 49.4%; height: 100%; background: #fbbf24; border-radius: 99px 0 0 99px; }
+.timeline-p2 { position: absolute; left: 49.4%; width: 28%; height: 100%; background: #10b981; }
+.timeline-today { position: absolute; left: 77.4%; top: -4px; width: 2px; height: 15px; background: #ef4444; border-radius: 2px; }
+.timeline-today::after { content: '오늘(5/12)'; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #ef4444; white-space: nowrap; font-weight: 600; }
+.timeline-legend { display: flex; gap: 16px; margin-top: 7px; font-size: 11px; color: #6b7280; }
+.legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+
+/* ─── LAYOUT ─── */
+.main { max-width: 1440px; margin: 0 auto; padding: 20px 20px 40px; }
+
+/* ─── SECTION LABEL ─── */
+.section-label { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; margin: 28px 0 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tag { font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 600; text-transform: none; letter-spacing: 0; }
+.tag-warn { background: #fef3c7; color: #92400e; }
+.tag-ok { background: #d1fae5; color: #065f46; }
+.tag-blue { background: #dbeafe; color: #1e40af; }
+.tag-gray { background: #f3f4f6; color: #6b7280; }
+
+/* ─── HERO RESULTS ─── */
+.hero-card { background: white; border-radius: 16px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 16px; }
+.hero-top { background: linear-gradient(135deg, #1e293b 0%, #0f2040 100%); padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; }
+.hero-top-title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+.hero-top-verdict { font-size: 14px; font-weight: 800; color: #86efac; margin-top: 4px; }
+.hero-groups { display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr; }
+.hero-divider { background: #f3f4f6; }
+.hero-group { padding: 22px 26px; }
+.hero-group-label { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.hero-badge { font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+.hero-role { font-size: 10px; color: #9ca3af; }
+.hero-num { font-size: 48px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; margin-bottom: 4px; }
+.hero-num-sub { font-size: 12px; color: #6b7280; margin-bottom: 10px; }
+.hero-delta { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 8px; margin-bottom: 12px; }
+.hero-delta-up { background: #dcfce7; color: #166534; }
+.hero-delta-base { background: #f3f4f6; color: #6b7280; font-size: 11px; }
+.hero-bar { height: 5px; background: #f3f4f6; border-radius: 99px; overflow: hidden; margin-bottom: 10px; }
+.hero-bar-fill { height: 100%; border-radius: 99px; }
+.hero-sub-stats { display: flex; flex-direction: column; gap: 4px; }
+.hero-sub-row { display: flex; justify-content: space-between; font-size: 11px; }
+.hero-sub-k { color: #9ca3af; }
+.hero-sub-v { font-weight: 600; color: #374151; }
+.hero-p2-bar { background: #f9fafb; border-top: 1px solid #f3f4f6; padding: 12px 28px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+.hero-p2-item { padding: 0 10px; font-size: 12px; }
+.hero-p2-item:first-child { padding-left: 0; }
+.hero-p2-num { font-size: 20px; font-weight: 800; }
+.hero-p2-delta { font-size: 11px; font-weight: 700; margin-left: 4px; }
+.hero-p2-lbl { font-size: 11px; color: #9ca3af; margin-top: 1px; }
+
+/* ─── PIPELINE ─── */
+.pipeline-card { background: white; border-radius: 14px; border: 1px solid #e5e7eb; padding: 18px 24px; margin-bottom: 16px; }
+.pipe-title { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
+.pipe-subtitle { font-size: 11px; color: #9ca3af; margin-bottom: 14px; }
+.pipe-flow { display: flex; align-items: stretch; gap: 0; }
+.pipe-step { flex: 1; position: relative; }
+.pipe-box { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px 14px; height: 100%; }
+.pipe-step.pipe-highlight .pipe-box { background: #eff6ff; border-color: #bfdbfe; }
+.pipe-step.pipe-result .pipe-box { background: linear-gradient(135deg, #059669 0%, #047857 100%); border-color: transparent; }
+.pipe-lbl { font-size: 10px; color: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 5px; }
+.pipe-result .pipe-lbl { color: rgba(255,255,255,0.6); }
+.pipe-num { font-size: 20px; font-weight: 900; color: #111827; line-height: 1; }
+.pipe-result .pipe-num { color: white; }
+.pipe-sub { font-size: 11px; color: #6b7280; margin-top: 4px; line-height: 1.4; }
+.pipe-result .pipe-sub { color: rgba(255,255,255,0.65); }
+.pipe-pct-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 20px; margin-top: 5px; }
+.pipe-arrow { display: flex; align-items: center; padding: 0 7px; color: #d1d5db; font-size: 18px; flex-shrink: 0; align-self: center; }
+
+/* ─── CHARTS ─── */
+.chart-row { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 16px; }
+.chart-row-full { margin-bottom: 16px; }
+.chart-card { background: white; border-radius: 12px; padding: 18px; border: 1px solid #e5e7eb; }
+.chart-card h3 { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 3px; }
+.chart-sub { font-size: 11px; color: #9ca3af; margin-bottom: 12px; line-height: 1.5; }
+.chart-wrap { height: 200px; position: relative; }
+.chart-wrap-tall { height: 220px; position: relative; }
+
+/* ─── GROUP CARDS ─── */
+.group-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+.grp { background: white; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; }
+.grp-head { padding: 11px 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.grp-badge { font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+.grp-role { font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 600; }
+.grp-a .grp-head { background: #eff6ff; }
+.grp-a .grp-badge { background: #dbeafe; color: #1e40af; }
+.grp-a .grp-role { background: #e0f2fe; color: #0369a1; }
+.grp-b .grp-head { background: #fdf4ff; }
+.grp-b .grp-badge { background: #f3e8ff; color: #7e22ce; }
+.grp-b .grp-role { background: #f5d0fe; color: #7e22ce; }
+.grp-c .grp-head { background: #f0fdf4; }
+.grp-c .grp-badge { background: #dcfce7; color: #166534; }
+.grp-c .grp-role { background: #bbf7d0; color: #166534; }
+.grp-name { font-size: 11px; color: #6b7280; }
+.grp-body { padding: 14px 16px; }
+.pf0-big { font-size: 34px; font-weight: 900; line-height: 1; margin-bottom: 2px; }
+.pf0-label { font-size: 11px; color: #9ca3af; margin-bottom: 10px; }
+.pf0-bar { height: 5px; background: #f3f4f6; border-radius: 99px; margin-bottom: 12px; overflow: hidden; }
+.pf0-bar-fill { height: 100%; border-radius: 99px; }
+.grp-a .pf0-big { color: #2563eb; }
+.grp-a .pf0-bar-fill { background: #3b82f6; }
+.grp-b .pf0-big { color: #7c3aed; }
+.grp-b .pf0-bar-fill { background: #8b5cf6; }
+.grp-c .pf0-big { color: #16a34a; }
+.grp-c .pf0-bar-fill { background: #22c55e; }
+.grp-stats { display: flex; flex-direction: column; gap: 5px; }
+.grp-stat-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+.grp-stat-row .k { color: #9ca3af; }
+.grp-stat-row .v { font-weight: 600; }
+.diff-badge { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; margin-left: 4px; }
+.diff-up { background: #dcfce7; color: #166534; }
+.diff-neutral { background: #f3f4f6; color: #6b7280; }
+.grp-divider { border-top: 1px solid #f3f4f6; margin: 10px 0; }
+.grp-funnel { display: flex; flex-direction: column; gap: 5px; }
+.funnel-row { display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
+.funnel-row .fk { color: #9ca3af; }
+.funnel-row .fv { font-weight: 600; }
+.funnel-bar { height: 4px; background: #f3f4f6; border-radius: 99px; overflow: hidden; margin: 2px 0; }
+.funnel-bar-fill { height: 100%; border-radius: 99px; }
+
+/* ─── DIRECT / INDIRECT CONVERSION ─── */
+.conv-card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.conv-total { font-size: 11px; color: #9ca3af; margin-bottom: 14px; }
+.conv-split-row { display: flex; flex-direction: column; gap: 10px; }
+.conv-item { display: flex; flex-direction: column; gap: 4px; }
+.conv-item-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; }
+.conv-item-label { color: #374151; font-weight: 600; }
+.conv-item-count { font-size: 18px; font-weight: 900; }
+.conv-item-pct { font-size: 12px; color: #6b7280; font-weight: 500; }
+.conv-bar-track { height: 8px; background: #f3f4f6; border-radius: 99px; overflow: hidden; }
+.conv-bar-fill { height: 100%; border-radius: 99px; }
+.conv-note { font-size: 11px; color: #9ca3af; margin-top: 14px; padding-top: 12px; border-top: 1px solid #f3f4f6; line-height: 1.5; }
+
+/* ─── P2 TABLE ─── */
+.p2-summary-row { display: block; margin-bottom: 16px; }
+.funnel-card { background: white; border-radius: 12px; border: 1px solid #e5e7eb; padding: 18px 22px; }
+.funnel-card h3 { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 3px; }
+.fsub { font-size: 11px; color: #9ca3af; margin-bottom: 14px; }
+.funnel-visual { display: flex; flex-direction: column; gap: 0; }
+.fv-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f9fafb; }
+.fv-step:last-child { border-bottom: none; }
+.fv-icon { font-size: 16px; width: 24px; text-align: center; }
+.fv-info { flex: 1; }
+.fv-label { font-size: 11px; color: #9ca3af; margin-bottom: 2px; }
+.fv-nums { display: flex; align-items: baseline; gap: 8px; }
+.fv-num-p2 { font-size: 16px; font-weight: 800; color: #059669; }
+.fv-pct { font-size: 11px; color: #9ca3af; }
+.fv-bar { height: 4px; background: #f3f4f6; border-radius: 99px; margin-top: 5px; overflow: hidden; }
+.fv-bar-g { height: 100%; background: #10b981; border-radius: 99px; }
+
+/* ─── DECISION CARDS ─── */
+.decision-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+.dec-card { background: white; border-radius: 12px; border: 1px solid #e5e7eb; padding: 16px 18px; }
+.dec-card .icon { font-size: 20px; margin-bottom: 7px; }
+.dec-card .title { font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+.dec-card .number { font-size: 24px; font-weight: 900; color: #111827; line-height: 1; margin-bottom: 5px; }
+.dec-card .desc { font-size: 12px; color: #6b7280; line-height: 1.5; }
+.dec-card .formula { background: #f9fafb; border-radius: 6px; padding: 8px 10px; margin-top: 8px; font-size: 11px; color: #374151; line-height: 1.6; }
+
+/* ─── INSIGHT ─── */
+.insight-box { background: white; border-radius: 12px; border: 1px solid #e5e7eb; padding: 18px; margin-bottom: 16px; }
+.insight-box h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.insight-list { display: flex; flex-direction: column; gap: 8px; }
+.insight-item { display: flex; gap: 10px; font-size: 13px; }
+.insight-icon { flex-shrink: 0; font-size: 14px; margin-top: 2px; }
+.insight-text { color: #374151; line-height: 1.5; }
+.insight-text strong { color: #111827; }
+
+/* ─── EXPERIMENT STRUCTURE ─── */
+.exp-structure { background: white; border-radius: 12px; border: 1px solid #e5e7eb; padding: 16px 20px; margin-bottom: 16px; }
+.exp-structure-title { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+.exp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.exp-col { padding: 0 18px; }
+.exp-col:first-child { border-right: 1px solid #f3f4f6; padding-left: 0; }
+.exp-col:last-child { padding-right: 0; }
+.exp-phase-badge { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.exp-phase-dot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
+.exp-phase-name { font-size: 13px; font-weight: 800; color: #111827; }
+.exp-phase-range { font-size: 11px; color: #6b7280; margin-bottom: 7px; padding-left: 17px; }
+.exp-why { font-size: 11px; color: #374151; background: #f9fafb; border-radius: 6px; padding: 7px 10px; margin-bottom: 8px; line-height: 1.5; }
+.exp-why strong { color: #111827; }
+.exp-criteria { display: flex; flex-direction: column; gap: 4px; }
+.exp-crit-row { display: flex; gap: 7px; font-size: 11px; }
+.exp-crit-key { color: #9ca3af; white-space: nowrap; flex-shrink: 0; min-width: 56px; }
+.exp-crit-val { color: #374151; line-height: 1.4; }
+.exp-common { border-top: 1px solid #f3f4f6; margin-top: 12px; padding-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.exp-common-item { font-size: 11px; }
+.exp-common-key { color: #9ca3af; margin-bottom: 2px; }
+.exp-common-val { color: #374151; font-weight: 600; line-height: 1.5; }
+
+/* ─── BC COMPARE SECTIONS ─── */
+.bc-compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.bc-card { background: white; border-radius: 12px; border: 1px solid #e5e7eb; padding: 16px 20px; }
+.bc-card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 11px; color: #6b7280; }
+
+/* ─── CHART INTERPRET ─── */
+.chart-interpret { display: flex; gap: 8px; align-items: flex-start; background: #f8fafc; border-top: 1px solid #f0f0f0; margin-top: 12px; padding: 10px 12px; border-radius: 0 0 8px 8px; font-size: 12px; color: #374151; line-height: 1.55; }
+.chart-interpret-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.chart-interpret em { font-style: normal; font-weight: 700; color: #111827; }
+.chart-interpret .ci-good { color: #059669; font-weight: 700; }
+.chart-interpret .ci-neutral { color: #9ca3af; font-weight: 600; }
+
+/* ─── MISC ─── */
+.phase-divider { border: none; border-top: 2px dashed #e5e7eb; margin: 28px 0 24px; }
+.alert-info { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 14px; border-radius: 0 8px 8px 0; margin-bottom: 14px; font-size: 12px; color: #1e40af; line-height: 1.5; }
+.footnote { font-size: 11px; color: #9ca3af; margin-top: 20px; padding-bottom: 32px; display: flex; flex-direction: column; gap: 5px; line-height: 1.6; }
+
+/* ─── ABT SUMMARY BANNER ─── */
+.abt-summary { background: white; border-bottom: 1px solid #eef0f3; padding: 14px 20px; }
+.abt-summary-inner { max-width: 1440px; margin: 0 auto; }
+
+/* ─── CARD SHADOWS ─── */
+.hero-card, .pipeline-card, .chart-card, .grp, .funnel-card, .dec-card,
+.insight-box, .exp-structure, .bc-card, .conv-card, .abt-summary {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+/* ─── CONVERSION ANALYSIS ─── */
+.conv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.conv-card { background: white; border-radius: 12px; border: 1px solid #e5e7eb; padding: 18px 20px; }
+.conv-card-title { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+.conv-verdict { font-size: 13px; font-weight: 700; color: #059669; margin-bottom: 8px; }
+.conv-verdict.neutral { color: #374151; }
+.conv-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f3f4f6; font-size: 13px; }
+.conv-row:last-child { border-bottom: none; }
+.conv-label { color: #6b7280; }
+.conv-val { font-weight: 700; color: #111827; }
+.conv-diff { font-size: 11px; font-weight: 600; color: #6b7280; }
+
+</style>
+</head>
+<body>
+
+<!-- ─── TOP BAR ─── -->
+<div class="top-bar">
+  <div>
+    <h1>업셀링 PF0 실험 모니터링 대시보드</h1>
+    <div class="meta">A군 대조 / B군 업셀링+넛지 / C군 업셀링 | 비즈/법인 제외 | 실험 종료 5/13</div>
+  </div>
+  <div class="updated">데이터 기준: 반납 완료 ~5/12 (BQ)<br>수치 확정: P1 / 수집 중: P2</div>
+</div>
+
+<!-- ─── TIMELINE ─── -->
+<div class="timeline-bar">
+  <div class="timeline-inner">
+    <div class="timeline-label">
+      <span style="position:absolute;left:0">실험 시작 4/29</span>
+      <span style="position:absolute;left:49.4%;transform:translateX(-50%)">P2 시작 5/6</span>
+      <span style="position:absolute;right:0">종료 5/13</span>
+    </div>
+    <div class="timeline-track">
+      <div class="timeline-p1"></div>
+      <div class="timeline-p2"></div>
+      <div class="timeline-today"></div>
+    </div>
+    <div class="timeline-legend">
+      <span><span class="legend-dot" style="background:#fbbf24"></span>P1 (4/29~5/5): 일부 회원 미노출 버그 기간, 수치 확정</span>
+      <span><span class="legend-dot" style="background:#10b981"></span>P2 (5/6~): 버그 수정 후 정상 구간, 수집 중</span>
+      <span><span class="legend-dot" style="background:#ef4444;border-radius:0;width:2px;height:10px;display:inline-block;margin-right:4px;vertical-align:middle"></span>오늘 5/13 (실험 종료일)</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ABT SUMMARY BANNER ─── -->
+<div class="abt-summary">
+  <div class="abt-summary-inner">
+    <div style="font-size:11px;font-weight:700;color:#059669;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+      <span style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.06em;background:#f3f4f6;padding:2px 7px;border-radius:4px">A·B·C군 비교 결과</span>
+      B·C군 PF0 선택률, A군(대조) 대비 두 구간 모두 유의미하게 높음
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">
+      <div style="background:#f9fafb;border-radius:8px;padding:10px 14px">
+        <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P1 PF0 선택률 <span style="background:#fef3c7;color:#92400e;border-radius:3px;padding:1px 5px;font-size:9px;margin-left:4px">확정</span></div>
+        <div style="font-size:13px;color:#374151">
+          <span style="color:#9ca3af;font-size:12px">A 23.9%</span>
+          &nbsp;→&nbsp; <strong style="color:#7c3aed">B 26.0%</strong> <span style="font-size:11px;color:#059669;font-weight:700">+2.1%p</span>
+          &nbsp;&nbsp; <strong style="color:#16a34a">C 25.9%</strong> <span style="font-size:11px;color:#059669;font-weight:700">+2.0%p</span>
+        </div>
+      </div>
+      <div style="background:#f9fafb;border-radius:8px;padding:10px 14px">
+        <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 PF0 선택률 <span style="background:#d1fae5;color:#065f46;border-radius:3px;padding:1px 5px;font-size:9px;margin-left:4px">수집 중</span></div>
+        <div style="font-size:13px;color:#374151">
+          <span style="color:#9ca3af;font-size:12px">A 20.3%</span>
+          &nbsp;→&nbsp; <strong style="color:#7c3aed">B 24.8%</strong> <span style="font-size:11px;color:#059669;font-weight:700">+4.5%p</span>
+          &nbsp;&nbsp; <strong style="color:#16a34a">C 24.2%</strong> <span style="font-size:11px;color:#059669;font-weight:700">+3.9%p</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#374151;margin-bottom:8px;flex-wrap:wrap">
+      <span style="color:#9ca3af;font-size:11px">넛지 효과 (B vs C)</span>
+      <strong style="color:#6b7280">유의미한 차이 없음</strong>
+      <span style="font-size:11px;color:#9ca3af">P1 B-C +0.1%p &nbsp;/&nbsp; P2 B-C +0.6%p</span>
+    </div>
+    <div style="font-size:11px;color:#6b7280;line-height:1.6;background:#f0f9f4;border-radius:6px;padding:8px 12px;border-left:3px solid #86efac">
+      A군 23.9%·20.2%는 업셀링 화면 없이 결제 화면에서 고객이 자발 선택한 <strong>자연 비율 (기준선)</strong>. B·C군의 +2~4.6%p가 바텀시트가 새로 만들어낸 전환.
+    </div>
+    <div style="margin-top:6px;font-size:11px;color:#9ca3af">
+      <span style="color:#f59e0b;font-weight:700">⚠</span>&nbsp; P2는 단기 반납(당일~2박) 위주 집계 · 3박 이상 미포함 · 5/13 실험 종료 후 확정
+    </div>
+  </div>
+</div>
+
+<!-- ─── MAIN ─── -->
+<div class="main">
+
+  <!-- ① HERO RESULTS -->
+  <div class="section-label" style="margin-top:20px">PF0 선택률 실험 결과 <span class="tag tag-warn">P1 확정</span> <span class="tag tag-ok">P2 수집 중</span></div>
+  <div class="hero-card">
+    <div class="hero-top">
+      <div>
+        <div class="hero-top-title">실험 종료 D-1, 현재까지 결론</div>
+        <div class="hero-top-verdict">B/C군 PF0 선택률 유의미 상승 &nbsp;<span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6)">P1: B 26.0% / C 25.9% &nbsp;|&nbsp; P2: B 24.8% / C 24.2% &nbsp;(vs A 기준선)</span></div>
+      </div>
+    </div>
+
+    <!-- PF0 선택률 비교표 -->
+    <div style="padding:16px 28px 8px">
+      <table style="width:100%;border-collapse:collapse">
+        <thead>
+          <tr>
+            <th style="width:110px;padding:6px 0 8px;text-align:left;font-size:10px;font-weight:600;color:#9ca3af;border-bottom:2px solid #f3f4f6">구간</th>
+            <th style="padding:6px 12px 8px;text-align:center;border-bottom:2px solid #f3f4f6">
+              <span style="font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px;background:#dbeafe;color:#1e40af">A군</span>
+              <div style="font-size:10px;color:#9ca3af;margin-top:3px;font-weight:400">대조군</div>
+              <div style="font-size:9px;color:#9ca3af;margin-top:1px;font-weight:400;line-height:1.4">업셀링 화면 없음<br>결제 화면 자발 선택</div>
+            </th>
+            <th style="padding:6px 12px 8px;text-align:center;border-bottom:2px solid #f3f4f6">
+              <span style="font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px;background:#f3e8ff;color:#7e22ce">B군</span>
+              <div style="font-size:10px;color:#9ca3af;margin-top:3px;font-weight:400">업셀링+넛지</div>
+            </th>
+            <th style="padding:6px 12px 8px;text-align:center;border-bottom:2px solid #f3f4f6">
+              <span style="font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px;background:#dcfce7;color:#166534">C군</span>
+              <div style="font-size:10px;color:#9ca3af;margin-top:3px;font-weight:400">업셀링</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:14px 0;vertical-align:top">
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#6b7280">
+                <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#fbbf24;flex-shrink:0"></span>P1 확정
+              </div>
+              <div style="font-size:10px;color:#9ca3af;margin-top:2px;padding-left:13px">4/29~5/5</div>
+            </td>
+            <td style="padding:14px 12px;text-align:center;vertical-align:top">
+              <div style="font-size:34px;font-weight:900;line-height:1;color:#2563eb">23.9%</div>
+              <div style="font-size:11px;color:#9ca3af;margin-top:5px">3,962건 / 16,597건</div>
+              <div style="display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#f3f4f6;color:#6b7280;margin-top:6px">기준선</div>
+            </td>
+            <td style="padding:14px 12px;text-align:center;vertical-align:top">
+              <div style="font-size:34px;font-weight:900;line-height:1;color:#7c3aed">26.0%</div>
+              <div style="font-size:11px;color:#9ca3af;margin-top:5px">4,241건 / 16,322건</div>
+              <div style="display:inline-flex;align-items:center;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;background:#dcfce7;color:#166534;margin-top:6px">▲ +2.1%p vs A군</div>
+            </td>
+            <td style="padding:14px 12px;text-align:center;vertical-align:top">
+              <div style="font-size:34px;font-weight:900;line-height:1;color:#16a34a">25.9%</div>
+              <div style="font-size:11px;color:#9ca3af;margin-top:5px">4,209건 / 16,281건</div>
+              <div style="display:inline-flex;align-items:center;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;background:#dcfce7;color:#166534;margin-top:6px">▲ +2.0%p vs A군</div>
+            </td>
+          </tr>
+          <tr style="background:#f9fafb">
+            <td style="padding:14px 0;vertical-align:top;border-top:1px solid #eef0f0">
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#6b7280">
+                <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#10b981;flex-shrink:0"></span>P2 수집 중
+              </div>
+              <div style="font-size:10px;color:#9ca3af;margin-top:2px;padding-left:13px">5/6~5/12</div>
+              <div style="font-size:10px;color:#f59e0b;margin-top:1px;padding-left:13px">단기 위주 집계 (3박+ 예약은 아직 반납 전이라 미포함)</div>
+            </td>
+            <td style="padding:14px 12px;text-align:center;vertical-align:top;border-top:1px solid #eef0f0">
+              <div style="font-size:34px;font-weight:900;line-height:1;color:#2563eb">20.3%</div>
+              <div style="font-size:11px;color:#9ca3af;margin-top:5px">3,792건 / 18,666건</div>
+              <div style="display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#f3f4f6;color:#6b7280;margin-top:6px">기준선</div>
+            </td>
+            <td style="padding:14px 12px;text-align:center;vertical-align:top;border-top:1px solid #eef0f0">
+              <div style="font-size:34px;font-weight:900;line-height:1;color:#7c3aed">24.8%</div>
+              <div style="font-size:11px;color:#9ca3af;margin-top:5px">4,525건 / 18,243건</div>
+              <div style="display:inline-flex;align-items:center;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;background:#dcfce7;color:#166534;margin-top:6px">▲ +4.5%p vs A군</div>
+            </td>
+            <td style="padding:14px 12px;text-align:center;vertical-align:top;border-top:1px solid #eef0f0">
+              <div style="font-size:34px;font-weight:900;line-height:1;color:#16a34a">24.2%</div>
+              <div style="font-size:11px;color:#9ca3af;margin-top:5px">4,470건 / 18,473건</div>
+              <div style="display:inline-flex;align-items:center;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;background:#dcfce7;color:#166534;margin-top:6px">▲ +3.9%p vs A군</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- 통계 유의성 근거 -->
+    <div style="margin:0 28px 16px;padding:10px 14px;background:#f0fdf4;border-radius:8px;border-left:3px solid #22c55e;font-size:12px;color:#374151;line-height:1.6">
+      <strong style="color:#059669">통계적으로 유의미한 차이 확인</strong> (2비율 z-검정, p &lt; 0.0001)<br>
+      B·C군 선택률이 A군보다 높은 것이 우연일 확률 0.01% 미만. 군당 약 16,000명 표본이며, P1·P2 두 구간에서 같은 방향으로 일관되게 나타남.<br>
+      <span style="color:#9ca3af;font-size:11px">검정값: A vs B z=4.4 / A vs C z=4.2 · 유의수준 α=0.05</span>
+    </div>
+  </div>
+
+  <!-- ② PIPELINE FUNNEL -->
+  <div class="pipeline-card">
+    <div class="pipe-title">전체 퍼널 흐름 (B+C군 합산)</div>
+    <div class="pipe-subtitle">P1 기준 (4/29~5/5 반납 완료 / 비즈/법인 제외 / 수치 확정)</div>
+    <div class="pipe-flow">
+      <div class="pipe-step">
+        <div class="pipe-box">
+          <div class="pipe-lbl">전체 완료 예약</div>
+          <div class="pipe-num">49,200건</div>
+          <div class="pipe-sub">A+B+C 합산<br>비즈/법인 제외</div>
+        </div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step pipe-highlight">
+        <div class="pipe-box">
+          <div class="pipe-lbl">업셀링 대상 (B+C군)</div>
+          <div class="pipe-num">32,603건</div>
+          <div class="pipe-sub">전체의 66.3%</div>
+          <span class="pipe-pct-badge" style="background:#dbeafe;color:#1e40af">66.3%</span>
+        </div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-box">
+          <div class="pipe-lbl">바텀시트 노출</div>
+          <div class="pipe-num">29,872건</div>
+          <div class="pipe-sub">B+C 대상의 91.6%<br>B: 14,840 / C: 15,032<br><span style="color:#9ca3af;font-size:10px">미노출 8.4%(2,731건): PF0 기선택자</span></div>
+          <span class="pipe-pct-badge" style="background:#f3e8ff;color:#7e22ce">91.6%</span>
+        </div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-box">
+          <div class="pipe-lbl">결제하기 버튼 클릭</div>
+          <div class="pipe-num">25,925건</div>
+          <div class="pipe-sub">노출의 86.8%<br>이탈 3,947건 (B+C)</div>
+          <span class="pipe-pct-badge" style="background:#dcfce7;color:#166534">86.8%</span>
+        </div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step pipe-result">
+        <div class="pipe-box">
+          <div class="pipe-lbl">PF0 선택률 (P1)</div>
+          <div class="pipe-num" style="font-size:16px">B 26.0% · C 25.9%</div>
+          <div class="pipe-sub">업셀링 전환 효과: B +2.1%p / C +2.0%p (A 23.9% 대비)<br><span style="color:rgba(255,255,255,0.45);font-size:10px">P2(5/6~5/12): B +4.5%p / C +3.9%p</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② P2 PIPELINE FUNNEL -->
+  <div class="pipeline-card">
+    <div class="pipe-title">업셀링 화면 흐름 (B+C군 합산)</div>
+    <div class="pipe-subtitle">P2 기준 (5/6~5/12 / 7일 / 단기 위주, 3박+ 반납 전 미포함 / 수집 중)</div>
+    <div class="pipe-flow">
+      <div class="pipe-step pipe-highlight">
+        <div class="pipe-box">
+          <div class="pipe-lbl">바텀시트 노출</div>
+          <div class="pipe-num">40,450건</div>
+          <div class="pipe-sub">B+C 합산<br>B: 20,022 / C: 20,428</div>
+          <span class="pipe-pct-badge" style="background:#d1fae5;color:#065f46">= 100%</span>
+        </div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-box">
+          <div class="pipe-lbl">결제하기 버튼 클릭</div>
+          <div class="pipe-num">35,613건</div>
+          <div class="pipe-sub">노출의 88.0%<br>이탈 4,837건 <span style="color:#059669;font-weight:700">▼1.2%p vs P1</span></div>
+          <span class="pipe-pct-badge" style="background:#dcfce7;color:#166534">88.0%</span>
+        </div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step pipe-result">
+        <div class="pipe-box">
+          <div class="pipe-lbl">PF0 선택률 (P2)</div>
+          <div class="pipe-num" style="font-size:16px">B 24.8% · C 24.2%</div>
+          <div class="pipe-sub">vs A군 20.3%<br><span style="color:rgba(255,255,255,0.7)">B +4.5%p / C +3.9%p</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 노출 기준 PF0 수락 비율 (B·C 비교) -->
+  <div class="section-label">노출 기준 PF0 수락 비율 (B·C 비교) <span class="tag tag-blue">업셀링 화면을 본 회원 중 PF0 선택 비율 · 약 7%</span> <span class="tag tag-gray">넛지 유무가 선택률에 영향 미치는지 확인</span></div>
+  <div class="bc-compare-row">
+    <div class="bc-card" style="border-top:3px solid #8b5cf6">
+      <div class="bc-card-head">
+        <span class="grp-badge" style="background:#f3e8ff;color:#7e22ce">B군</span>
+        <span>업셀링+넛지</span>
+        <span style="margin-left:auto;font-weight:700;color:#374151">선택률 <span style="color:#7c3aed;font-size:15px;font-weight:900">6.9%</span></span>
+      </div>
+      <div style="font-size:12px;color:#374151;margin-bottom:10px">9,572명 노출 → <strong>657명 전환</strong></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
+        <span style="color:#6b7280">직접 (결제하기→PF0)</span>
+        <span><strong style="color:#7c3aed">602명</strong> <span style="color:#9ca3af;margin-left:4px">91.6%</span></span>
+      </div>
+      <div class="conv-bar-track" style="margin-bottom:6px"><div class="conv-bar-fill" style="width:91.6%;background:#8b5cf6"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
+        <span style="color:#6b7280">간접 (결제페이지 자체 선택)</span>
+        <span><strong style="color:#a78bfa">55명</strong> <span style="color:#9ca3af;margin-left:4px">8.4%</span></span>
+      </div>
+      <div class="conv-bar-track"><div class="conv-bar-fill" style="width:8.4%;background:#c4b5fd"></div></div>
+    </div>
+    <div class="bc-card" style="border-top:3px solid #22c55e">
+      <div class="bc-card-head">
+        <span class="grp-badge" style="background:#dcfce7;color:#166534">C군</span>
+        <span>업셀링</span>
+        <span style="margin-left:auto;font-weight:700;color:#374151">선택률 <span style="color:#16a34a;font-size:15px;font-weight:900">7.0%</span></span>
+      </div>
+      <div style="font-size:12px;color:#374151;margin-bottom:10px">9,708명 노출 → <strong>682명 전환</strong></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
+        <span style="color:#6b7280">직접 (결제하기→PF0)</span>
+        <span><strong style="color:#16a34a">635명</strong> <span style="color:#9ca3af;margin-left:4px">93.1%</span></span>
+      </div>
+      <div class="conv-bar-track" style="margin-bottom:6px"><div class="conv-bar-fill" style="width:93.1%;background:#22c55e"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
+        <span style="color:#6b7280">간접 (결제페이지 자체 선택)</span>
+        <span><strong style="color:#86efac">47명</strong> <span style="color:#9ca3af;margin-left:4px">6.9%</span></span>
+      </div>
+      <div class="conv-bar-track"><div class="conv-bar-fill" style="width:6.9%;background:#86efac"></div></div>
+    </div>
+  </div>
+
+  <!-- ③ CHART: 일별 추이 -->
+  <div class="section-label">PF0 선택률 일별 추이 <span class="tag tag-warn">P1 4/29~5/5</span> <span class="tag tag-ok">P2 5/7~5/12</span></div>
+  <div class="chart-row-full">
+    <div class="chart-card">
+      <h3>A/B/C군 PF0 선택률 P1+P2 연속 추이</h3>
+      <div class="chart-sub">비즈/법인 제외 / "|" 는 5/6 버그 수정 경계 (해당일 데이터 제외)</div>
+      <div class="chart-wrap-tall"><canvas id="pf0Chart"></canvas></div>
+      <div class="chart-interpret">
+        <span class="chart-interpret-icon">💡</span>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div>B군(보라)/C군(초록)이 A군(파랑)보다 높을수록 업셀링 효과가 큰 것.</div>
+          <div><span class="ci-good">P2 구간에서 격차가 더 벌어짐</span> → 버그 수정 후 정상 노출되면서 효과가 더 선명하게 나타남.</div>
+          <div>주말(5/1~2, 5/8~9) 전체적으로 높고 평일은 낮은 패턴은 A·B·C 공통.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-row-full">
+    <div class="chart-card">
+      <h3>B/C군 일별 이탈률</h3>
+      <div class="chart-sub">P1 평균 B 13.2% / C 13.1% → P2 평균 B 11.9% / C 12.0%</div>
+      <div class="chart-wrap-tall"><canvas id="exitRateChart"></canvas></div>
+      <div class="chart-interpret">
+        <span class="chart-interpret-icon">💡</span>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div><span class="ci-good">낮을수록 좋음.</span> 업셀링 화면을 본 뒤 결제하기 버튼 없이 닫은 비율.</div>
+          <div>P1 평균 13%대 → P2 12%대로 감소. 화면 노출 후 이탈이 점차 줄어듦.</div>
+          <div><span class="ci-neutral">B(넛지)와 C(바텀시트만) 간 차이는 거의 없음.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 군별 카드 (P1 확정 + P2 수집 중) -->
+  <div class="section-label">군별 상세 <span class="tag tag-warn">P1 확정 4/29~5/5</span> <span class="tag tag-ok">P2 수집 중 5/6~5/12</span></div>
+  <div class="alert-info">
+    <strong>A군</strong>: 업셀링 바텀시트 미노출. 기존 결제 화면에서 스스로 PF0를 선택한 고객만 집계 → 업셀링 없는 <strong>자연 선택 기준선</strong><br>
+    <strong>B·C군</strong>: 업셀링 바텀시트 노출. 전체 선택률에 자발 선택(A군 수준) + 바텀시트 경유 신규 전환이 합산됨<br><br>
+    <strong>전체 선택률 (~24~26%)</strong>: 그룹 내 전체 완료 예약 대비 PF0 선택 건수 → A군과 직접 비교 가능한 주요 지표<br>
+    <strong>노출 기준 선택률 (~7%)</strong>: 업셀링 화면을 실제 본 회원 중 PF0 선택 비율 → 분모가 달라 위 수치와 직접 비교 불가. 하단에 별도 표시
+  </div>
+  <div class="group-row">
+
+    <div class="grp grp-a">
+      <div class="grp-head">
+        <span class="grp-badge">A군</span>
+        <span class="grp-role">대조군</span>
+        <span class="grp-name">16,597건</span>
+      </div>
+      <div class="grp-body">
+        <div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">PF0 선택률 / 전체 완료예약 기준</div>
+        <div class="pf0-big">23.9%</div>
+        <div class="pf0-label">3,962건 / 업셀링 바텀시트 없음 (자발 선택)</div>
+        <div class="pf0-bar"><div class="pf0-bar-fill" style="width:23.9%"></div></div>
+        <div class="grp-stats">
+          <div class="grp-stat-row"><span class="k">평균 객단가</span><span class="v">80,634원 <span class="diff-badge diff-neutral">기준</span></span></div>
+          <div class="grp-stat-row"><span class="k">평균 PF 매출</span><span class="v">6,250원 <span class="diff-badge diff-neutral">기준</span></span></div>
+          <div class="grp-stat-row"><span class="k">업셀링 노출</span><span class="v" style="color:#9ca3af">없음 (대조군)</span></div>
+        </div>
+        <div class="grp-divider"></div>
+        <div style="background:#f9fafb;border-radius:8px;padding:10px 12px">
+          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 수집 중 / 5/6~5/12</div>
+          <div style="font-size:24px;font-weight:900;color:#2563eb;line-height:1">20.3%</div>
+          <div style="font-size:11px;color:#9ca3af;margin-top:3px;margin-bottom:6px">
+            3,792건 / 18,666건
+            <div style="font-size:10px;margin-top:2px"><span style="color:#f59e0b;font-weight:600">단기 위주 집계</span> · 3박+ 반납 전 미포함</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px">
+            <span style="color:#9ca3af">평균 객단가</span><span style="font-weight:600">57,755원 <span class="diff-badge diff-neutral">기준</span></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:3px">
+            <span style="color:#9ca3af">평균 PF 매출</span><span style="font-weight:600">4,225원 <span class="diff-badge diff-neutral">기준</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grp grp-b">
+      <div class="grp-head">
+        <span class="grp-badge">B군</span>
+        <span class="grp-role">업셀링+넛지</span>
+        <span class="grp-name">16,322건</span>
+      </div>
+      <div class="grp-body">
+        <div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">PF0 선택률 / 전체 완료예약 기준</div>
+        <div class="pf0-big">26.0%</div>
+        <div class="pf0-label">4,241건 / 업셀링 전환 효과 <strong style="color:#166534">+2.1%p</strong></div>
+        <div class="pf0-bar"><div class="pf0-bar-fill" style="width:26.0%"></div></div>
+        <div class="grp-stats">
+          <div class="grp-stat-row"><span class="k">평균 객단가</span><span class="v">81,695원 <span class="diff-badge diff-up">+1,061원</span></span></div>
+          <div class="grp-stat-row"><span class="k">평균 PF 매출</span><span class="v">6,566원 <span class="diff-badge diff-up">+316원</span></span></div>
+        </div>
+        <div class="grp-divider"></div>
+        <div style="background:#f9fafb;border-radius:8px;padding:10px 12px">
+          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 수집 중 / 5/6~5/12</div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:3px">
+            <span style="font-size:24px;font-weight:900;color:#7c3aed;line-height:1">24.8%</span>
+            <span style="font-size:12px;font-weight:800;padding:2px 7px;border-radius:20px;background:#dcfce7;color:#166534">▲ +4.5%p</span>
+          </div>
+          <div style="font-size:11px;color:#9ca3af;margin-bottom:6px">
+            4,525건 / 18,243건
+            <div style="font-size:10px;margin-top:2px"><span style="color:#f59e0b;font-weight:600">단기 위주 집계</span> · 3박+ 반납 전 미포함</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px">
+            <span style="color:#9ca3af">평균 객단가</span><span style="font-weight:600">58,859원 <span class="diff-badge diff-up">+1,104원</span></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:3px">
+            <span style="color:#9ca3af">평균 PF 매출</span><span style="font-weight:600">4,951원 <span class="diff-badge diff-up">+726원</span></span>
+          </div>
+          <div style="font-size:11px;margin-top:5px;padding-top:5px;border-top:1px solid #e9ebee">
+            <div style="color:#9ca3af;margin-bottom:2px">P2 바텀시트 흐름</div>
+            <div style="font-weight:600">노출 20,022 → 결제하기 17,631 → <span style="color:#6b7280">이탈 2,391 (11.9%)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grp grp-c">
+      <div class="grp-head">
+        <span class="grp-badge">C군</span>
+        <span class="grp-role">업셀링</span>
+        <span class="grp-name">16,281건</span>
+      </div>
+      <div class="grp-body">
+        <div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">PF0 선택률 / 전체 완료예약 기준</div>
+        <div class="pf0-big">25.9%</div>
+        <div class="pf0-label">4,209건 / 업셀링 전환 효과 <strong style="color:#166534">+2.0%p</strong></div>
+        <div class="pf0-bar"><div class="pf0-bar-fill" style="width:25.9%"></div></div>
+        <div class="grp-stats">
+          <div class="grp-stat-row"><span class="k">평균 객단가</span><span class="v">80,810원 <span class="diff-badge diff-up">+176원</span></span></div>
+          <div class="grp-stat-row"><span class="k">평균 PF 매출</span><span class="v">6,447원 <span class="diff-badge diff-up">+197원</span></span></div>
+        </div>
+        <div class="grp-divider"></div>
+        <div style="background:#f9fafb;border-radius:8px;padding:10px 12px">
+          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 수집 중 / 5/6~5/12</div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:3px">
+            <span style="font-size:24px;font-weight:900;color:#16a34a;line-height:1">24.2%</span>
+            <span style="font-size:12px;font-weight:800;padding:2px 7px;border-radius:20px;background:#dcfce7;color:#166534">▲ +3.9%p</span>
+          </div>
+          <div style="font-size:11px;color:#9ca3af;margin-bottom:6px">
+            4,470건 / 18,473건
+            <div style="font-size:10px;margin-top:2px"><span style="color:#f59e0b;font-weight:600">단기 위주 집계</span> · 3박+ 반납 전 미포함</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px">
+            <span style="color:#9ca3af">평균 객단가</span><span style="font-weight:600">57,845원 <span class="diff-badge diff-up">+90원</span></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:3px">
+            <span style="color:#9ca3af">평균 PF 매출</span><span style="font-weight:600">4,739원 <span class="diff-badge diff-up">+514원</span></span>
+          </div>
+          <div style="font-size:11px;margin-top:5px;padding-top:5px;border-top:1px solid #e9ebee">
+            <div style="color:#9ca3af;margin-bottom:2px">P2 바텀시트 흐름</div>
+            <div style="font-weight:600">노출 20,428 → 결제하기 17,982 → <span style="color:#6b7280">이탈 2,446 (12.0%)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- B/C군 넛지 효과 검증 -->
+  <div class="section-label" style="margin-top:8px">넛지 강조 효과 검증 (B군 vs C군) <span class="tag tag-gray">넛지 추가 유무 외 조건 동일</span> <span class="tag tag-ok">P1 기준 유의미한 차이 없음</span> <span class="tag tag-warn">P2 수집 중 (최종 판단 5/13 이후)</span></div>
+
+  <!-- ─── DECISION ─── -->
+  <hr class="phase-divider">
+
+  <div class="section-label">실험 수익성 평가 <span class="tag tag-gray">업셀링이 수익에 유리한지 불리한지 판단</span></div>
+  <div class="decision-row">
+    <div class="dec-card">
+      <div class="icon">📈</div>
+      <div class="title">PF0 1건 더 팔릴 때 수익</div>
+      <div class="number">+16,309원</div>
+      <div class="desc">고객이 업셀링 화면을 보고 PF0를 선택하면, 기존 PF70/PF30 대비 추가로 버는 보험료 평균</div>
+      <div class="formula">과거 12개월 PF70·PF30 고객 비율을 감안한 가중평균 기준</div>
+    </div>
+    <div class="dec-card">
+      <div class="icon">⚠️</div>
+      <div class="title">업셀링 때문에 예약 자체를 취소하면 손실</div>
+      <div class="number" style="color:#6b7280">최대 -67,896원</div>
+      <div class="desc" style="font-weight:700;color:#16a34a">단, P1 실험에서 이탈 3,947명 전원이 예약 완료 → 실제 손실 없음</div>
+      <div class="formula">업셀링 화면을 닫고 나간 고객이 예약까지 취소한다고 가정한 최악의 시나리오 수치</div>
+    </div>
+    <div class="dec-card">
+      <div class="icon">⚖️</div>
+      <div class="title">수익이 손실을 넘으려면</div>
+      <div class="number">4.2배</div>
+      <div class="desc">이탈 1명 발생할 때 수락 4.2명이면 손익 균형. P1 실제 비율은 이탈 1명당 결제 수락 6.6명 → 손익분기(4.2명) 초과</div>
+      <div class="formula">67,896원(최대손실) ÷ 16,309원(건당수익) = 4.2배</div>
+    </div>
+  </div>
+
+  <!-- ─── INSIGHT ─── -->
+  <div class="insight-box">
+    <h3>현재까지 해석 (P1+P2 기준, 5/13)</h3>
+    <div class="insight-list">
+      <div class="insight-item">
+        <span class="insight-icon">🟢</span>
+        <span class="insight-text"><strong>버그 기간(P1)과 정상 구간(P2) 모두 B/C군 선택률 상승.</strong> P1: B +2.1%p, C +2.0%p / P2: B +4.5%p, C +3.9%p</span>
+      </div>
+      <div class="insight-item">
+        <span class="insight-icon">🟢</span>
+        <span class="insight-text"><strong>이탈률 P1 13.2%에서 P2 12.0%로 개선.</strong> P2 일평균 노출 6,742건(P1 4,267건 대비 +58%). 버그 수정으로 기존 미노출 회원 포함.</span>
+      </div>
+      <div class="insight-item">
+        <span class="insight-icon">🟡</span>
+        <span class="insight-text"><strong>B(넛지 포함)와 C(바텀시트만) 선택률 차이: P1 0.1%p, P2 0.6%p로 여전히 작음.</strong> 최종 판단은 5/13 종료 후 확정.</span>
+      </div>
+      <div class="insight-item">
+        <span class="insight-icon">🟡</span>
+        <span class="insight-text"><strong>직접 전환(결제하기 버튼) 91~93%, 간접 전환(결제 페이지 직접 선택) 7~8%.</strong></span>
+      </div>
+      <div class="insight-item">
+        <span class="insight-icon">🟡</span>
+        <span class="insight-text"><strong>P2 수치는 5/13 종료 후 최종 확정.</strong> 현재 5/6~5/12 반납 완료분 집계 → 당일~2박 단기 위주.<br>
+          객단가는 낮게 보임 (3박+ 장기 미포함. P1은 7일 완료라 장기 포함). PF0 선택률은 예약 시점 기준으로 유효.</span>
+      </div>
+      <div class="insight-item">
+        <span class="insight-icon">🔵</span>
+        <span class="insight-text"><strong>5/13 종료 후 확인:</strong> P2 선택률/객단가/PF매출 확정, B vs C 최종 판단, 정규화 여부.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── RESERVATION CONVERSION ANALYSIS ─── -->
+  <div class="section-label">예약 전환율 영향 분석 <span class="tag tag-blue">바텀시트 도입 전후</span> <span class="tag tag-ok">전환율 하락 없음</span></div>
+
+  <div class="alert-info">
+    4/29 배포 시 예약 확인 팝업이 바텀시트로 교체됨 (A/B/C 전 군 동일). 화면 단계 추가로 예약 전환율이 낮아졌는지 확인.<br>
+    측정: 예약 견적 조회 → 예약 완료 서버 로그 기준.
+  </div>
+
+  <div class="conv-grid">
+    <div class="conv-card">
+      <div class="conv-card-title">배포 전후 비교 (일평균 전환율)</div>
+      <div class="conv-verdict">전환율 변동 없음</div>
+      <div class="conv-row">
+        <span class="conv-label">배포 전 (4/14~4/28, 알럿)</span>
+        <span class="conv-val">42.3%</span>
+      </div>
+      <div class="conv-row">
+        <span class="conv-label">연휴 기간 (4/30~5/5)</span>
+        <span class="conv-val" style="color:#f59e0b">32~42%</span>
+      </div>
+      <div class="conv-row">
+        <span class="conv-label">연휴 후 (5/6~5/11, 바텀시트)</span>
+        <span class="conv-val">42.8%</span>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:#6b7280;line-height:1.6">
+        4/30~5/5 하락(32~42%)은 황금연휴 효과. 브라우징 증가(4/30 32,715명 피크)에 비해 예약 의도 낮음. 연휴 종료 후 정상 복귀.
+      </div>
+    </div>
+    <div class="conv-card">
+      <div class="conv-card-title">A군 vs B/C군 비교 (4/29~5/11 전체)</div>
+      <div class="conv-verdict">업셀링 바텀시트 영향 없음</div>
+      <div class="conv-row">
+        <span class="conv-label">A군 (바텀시트, 업셀링 없음)</span>
+        <span class="conv-val">45.86%</span>
+      </div>
+      <div class="conv-row">
+        <span class="conv-label">B/C군 (바텀시트 + 업셀링)</span>
+        <span class="conv-val">45.96%</span>
+      </div>
+      <div class="conv-row">
+        <span class="conv-label">차이</span>
+        <span class="conv-val" style="color:#059669">+0.10%p (B/C군이 소폭 높음)</span>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:#6b7280;line-height:1.6">
+        각 78,072명(A) / 153,044명(B/C) 기준. 차이 0.10%p로 업셀링 바텀시트가 전환율에 영향을 주지 않음.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── EXPERIMENT STRUCTURE (moved to bottom) ─── -->
+  <div class="section-label">실험 구조 / 집계 기준</div>
+  <div class="exp-structure">
+    <div class="exp-cols">
+
+      <div class="exp-col">
+        <div class="exp-phase-badge">
+          <span class="exp-phase-dot" style="background:#fbbf24"></span>
+          <span class="exp-phase-name">P1 (버그 기간)</span>
+        </div>
+        <div class="exp-phase-range">4월 29일 ~ 5월 5일 (7일)</div>
+        <div class="exp-why">
+          <strong>서버 버그</strong>로 비즈니스 프로필 등록 일반 회원에게 바텀시트 미표시. B/C군 배정이지만 업셀링 못 본 사람 포함.
+        </div>
+        <div class="exp-criteria">
+          <div class="exp-crit-row"><span class="exp-crit-key">집계 기준</span><span class="exp-crit-val">반납 완료 시각(return_at_kst) 4/29~5/5</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">제외 처리</span><span class="exp-crit-val">비즈니스 프로필/법인 예약 제외</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">예약 건수</span><span class="exp-crit-val">49,200건 (A 16,597 / B 16,322 / C 16,281)</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">집계 상태</span><span class="exp-crit-val">전 기간 반납 완료 → 수치 확정</span></div>
+        </div>
+      </div>
+
+      <div class="exp-col">
+        <div class="exp-phase-badge">
+          <span class="exp-phase-dot" style="background:#10b981"></span>
+          <span class="exp-phase-name">P2 (정상 구간)</span>
+        </div>
+        <div class="exp-phase-range">5월 6일 09:48 수정 배포 ~ 5월 13일 실험 종료 (수집 중)</div>
+        <div class="exp-why">
+          <strong>버그 수정 후</strong> 전체 B/C군 정상 노출. 예약 생성 시각(created_at_kst)으로 P1/P2 분리.
+        </div>
+        <div class="exp-criteria">
+          <div class="exp-crit-row"><span class="exp-crit-key">집계 기준</span><span class="exp-crit-val">예약 생성 시각 5/6 09:48 이후 + 반납 완료분만 집계</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">제외 처리</span><span class="exp-crit-val">동일 (비즈니스 프로필/법인 BQ 조인 제외)</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">예약 건수</span><span class="exp-crit-val">55,382건 (5/6~5/12 반납 완료 기준)</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">주의</span><span class="exp-crit-val">5/12 이전 반납 완료분만 집계 → 단기 예약 위주라 객단가 낮게 보임 (PF0 선택률은 유효)</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="exp-common">
+      <div class="exp-common-item">
+        <div class="exp-common-key">실험 대상 (공통)</div>
+        <div class="exp-common-val">PF0 예약 가능 조건 충족, 비회원/비즈/법인 제외</div>
+      </div>
+      <div class="exp-common-item">
+        <div class="exp-common-key">버킷 배정 (공통)</div>
+        <div class="exp-common-val">member_id 기반 해시로 A/B/C 33% 균등 배정<br>A: 0~33 / B: 34~66 / C: 67~99</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <div>* BQ: socar-data.socar_biz_profit.profit_socar_reservation | 반납 완료(return_at_kst) 기준, D+1 갱신</div>
+    <div>* 비즈/법인 제외: socar-data.tianjin_replica.reservation_biz_info (corp_group_id IS NOT NULL OR business_profile_id IS NOT NULL)</div>
+    <div>* 버킷: MOD(ABS(FARM_FINGERPRINT(member_id || 'UPSELLING_PF_NUDGE')), 100) | A: 0~33 / B: 34~66 / C: 67~99</div>
+    <div>* P1: return_at_kst 4/29~5/5 비즈 제외 / P2: created_at_kst >= '2026-05-06 09:48' AND return_at_kst 5/6~5/12 비즈 제외</div>
+    <div>* 직접/간접 전환: socar_app_web_log | P1 노출 회원 단위 (B 9,572명, C 9,708명) | 직접: CTA 클릭 + PF0 예약 | 간접: checkout 화면 자체 선택 + PF0 예약</div>
+    <div>* 이벤트: page_name='upsell_bottomsheet' | member_id 버킷 공식으로 B/C 분리 (reservation_id=NULL, 예약 테이블 직접 join 불가)</div>
+    <div>* P2 객단가/avg_pf는 단기 반납 편향으로 P1과 직접 비교 불가. PF0 선택률은 예약 시점 선택 기준으로 유효.</div>
+    <div>* 의사결정 기준: 2025-03-24~2026-03-24 PF타입별 가중평균 기반 레퍼런스</div>
+    <div>* 예약 전환율: socar-data.socar_server_3.PREVIEW_CAR_RENTAL → RESERVE_CAR_RENTAL | 고유 memberId 기준 | 4/14~5/11 일별 집계</div>
+    <div>* A vs B/C 전환율: 4/29~5/11 전체 기간 | A 78,072명 / B·C 153,044명 | 동일 버킷 공식 적용</div>
+  </div>
+
+</div>
+
+<script>
+const labels = ['4/29','4/30','5/1','5/2','5/3','5/4','5/5','','5/7','5/8','5/9','5/10','5/11','5/12'];
+
+const pf0 = {
+  A: [20.2, 20.5, 27.5, 28.6, 25.7, 24.0, 22.6, null, 16.9, 19.2, 23.5, 22.8, 17.9, 21.0],
+  B: [20.0, 19.9, 28.8, 31.1, 27.5, 28.4, 27.5, null, 22.5, 23.4, 28.6, 27.2, 23.0, 24.7],
+  C: [20.6, 20.9, 27.8, 32.1, 28.1, 26.6, 26.6, null, 20.5, 20.9, 27.4, 26.4, 23.4, 26.0],
+};
+
+const viewsB = [258, 1718, 2332, 2013, 2309, 2951, 3259, null, 3382, 3375, 2967, 3264, 3509, null];
+const viewsC = [256, 1835, 2235, 1956, 2233, 3018, 3499, null, 3580, 3518, 3136, 3198, 3504, null];
+const exitsB = [50,  257,  331,  237,  312,  397,  388,  null, 370,  401,  349,  376,  486,  null];
+const exitsC = [38,  247,  316,  273,  301,  373,  427,  null, 414,  401,  360,  358,  493,  null];
+const exitRateB = labels.map((_, i) =>
+  (viewsB[i] != null && exitsB[i] != null) ? +((exitsB[i] / viewsB[i] * 100).toFixed(1)) : null
+);
+const exitRateC = labels.map((_, i) =>
+  (viewsC[i] != null && exitsC[i] != null) ? +((exitsC[i] / viewsC[i] * 100).toFixed(1)) : null
+);
+
+// 5/6 gap marker: 빈 라벨 위치에 세로선 + 라벨 자동 표시
+Chart.register({
+  id: 'gapMarker',
+  afterDraw(chart) {
+    const idx = chart.data.labels.findIndex(l => l === '');
+    if (idx < 0) return;
+    const {ctx, scales: {x, y}} = chart;
+    const xMid  = x.getPixelForTick(idx);
+    const xPrev = idx > 0 ? x.getPixelForTick(idx - 1) : xMid;
+    const xNext = idx < chart.data.labels.length - 1 ? x.getPixelForTick(idx + 1) : xMid;
+    ctx.save();
+    ctx.fillStyle = 'rgba(239,68,68,0.05)';
+    ctx.fillRect((xMid + xPrev) / 2, y.top, (xNext - xPrev) / 2, y.bottom - y.top);
+    ctx.setLineDash([3, 3]);
+    ctx.strokeStyle = 'rgba(220,38,38,0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(xMid, y.top); ctx.lineTo(xMid, y.bottom); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(185,28,28,0.8)';
+    ctx.font = '700 9px -apple-system,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('5/6 버그수정 / P2 시작', xMid, y.top + 13);
+    ctx.restore();
+  }
+});
+
+const colA = '#3b82f6', colB = '#8b5cf6', colC = '#22c55e';
+const bgA  = 'rgba(59,130,246,0.08)', bgB = 'rgba(139,92,246,0.08)', bgC = 'rgba(34,197,94,0.08)';
+const baseOpts = {
+  responsive: true,
+  maintainAspectRatio: false,
+  spanGaps: false,
+  plugins: { legend: { labels: { font:{size:11}, boxWidth:10, padding:10 } } }
+};
+
+new Chart(document.getElementById('pf0Chart'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      { label: 'A군 (대조)', data: pf0.A, borderColor: colA, pointBackgroundColor: colA, backgroundColor: bgA, pointRadius: labels.map(l => l===''?0:5), borderWidth: 2, tension: 0.35, fill: true, borderDash: [5,3] },
+      { label: 'B군 (업셀링+넛지)', data: pf0.B, borderColor: colB, pointBackgroundColor: colB, backgroundColor: bgB, pointRadius: labels.map(l => l===''?0:5), borderWidth: 2.5, tension: 0.35, fill: true },
+      { label: 'C군 (업셀링)', data: pf0.C, borderColor: colC, pointBackgroundColor: colC, backgroundColor: bgC, pointRadius: labels.map(l => l===''?0:5), borderWidth: 2.5, tension: 0.35, fill: true },
+    ]
+  },
+  options: {
+    ...baseOpts,
+    scales: {
+      x: { ticks:{font:{size:11}}, grid:{color:'#f3f4f6'} },
+      y: { min:10, max:35, ticks:{font:{size:11}, callback: v => v+'%'}, grid:{color:'#f3f4f6'} }
+    }
+  }
+});
+
+new Chart(document.getElementById('exitRateChart'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      { label: 'B군 이탈률', data: exitRateB, borderColor: colB, pointBackgroundColor: colB, backgroundColor: 'rgba(139,92,246,0.07)', pointRadius: labels.map(l=>l===''?0:5), borderWidth: 2.5, tension: 0.35, fill: false },
+      { label: 'C군 이탈률', data: exitRateC, borderColor: colC, pointBackgroundColor: colC, backgroundColor: 'rgba(34,197,94,0.07)', pointRadius: labels.map(l=>l===''?0:5), borderWidth: 2.5, tension: 0.35, fill: false }
+    ]
+  },
+  options: {
+    ...baseOpts,
+    scales: {
+      x: { ticks:{font:{size:11}}, grid:{color:'#f3f4f6'} },
+      y: { min:0, max:25, ticks:{font:{size:11}, callback: v=>v+'%'}, grid:{color:'#f3f4f6'} }
+    }
+  }
+});
+
+</script>
+</body>
+</html>
