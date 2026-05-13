@@ -22,10 +22,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
 .timeline-inner { max-width: 1440px; margin: 0 auto; }
 .timeline-label { position: relative; height: 20px; font-size: 11px; color: #6b7280; margin-bottom: 5px; }
 .timeline-track { height: 7px; background: #e5e7eb; border-radius: 99px; position: relative; }
-.timeline-p1 { position: absolute; left: 0; width: 49.4%; height: 100%; background: #fbbf24; border-radius: 99px 0 0 99px; }
-.timeline-p2 { position: absolute; left: 49.4%; width: 28%; height: 100%; background: #10b981; }
-.timeline-today { position: absolute; left: 77.4%; top: -4px; width: 2px; height: 15px; background: #ef4444; border-radius: 2px; }
-.timeline-today::after { content: '오늘(5/12)'; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #ef4444; white-space: nowrap; font-weight: 600; }
+.timeline-p1 { position: absolute; left: 0; width: 46.7%; height: 100%; background: #fbbf24; border-radius: 99px 0 0 99px; }
+.timeline-p2 { position: absolute; left: 46.7%; width: 53.3%; height: 100%; background: #10b981; border-radius: 0 99px 99px 0; }
+.timeline-today { display: none; }
 .timeline-legend { display: flex; gap: 16px; margin-top: 7px; font-size: 11px; color: #6b7280; }
 .legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
 
@@ -257,7 +256,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     <h1>업셀링 PF0 실험 모니터링 대시보드</h1>
     <div class="meta">A군 대조 / B군 업셀링+넛지 / C군 업셀링 | 비즈/법인 제외 | 실험 종료 5/13</div>
   </div>
-  <div class="updated">데이터 기준: 반납 완료 ~5/12 (BQ)<br>수치 확정: P1 / 수집 중: P2</div>
+  <div class="updated">데이터 기준: 반납 완료 ~5/12 (BQ)<br>수치 확정: P1·P2 (5/13 반납분 D+1 미반영)</div>
 </div>
 
 <!-- ─── TIMELINE ─── -->
@@ -265,7 +264,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   <div class="timeline-inner">
     <div class="timeline-label">
       <span style="position:absolute;left:0">실험 시작 4/29</span>
-      <span style="position:absolute;left:49.4%;transform:translateX(-50%)">P2 시작 5/6</span>
+      <span style="position:absolute;left:46.7%;transform:translateX(-50%)">P2 시작 5/6</span>
       <span style="position:absolute;right:0">종료 5/13</span>
     </div>
     <div class="timeline-track">
@@ -275,8 +274,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     </div>
     <div class="timeline-legend">
       <span><span class="legend-dot" style="background:#fbbf24"></span>P1 (4/29~5/5): 일부 회원 미노출 버그 기간, 수치 확정</span>
-      <span><span class="legend-dot" style="background:#10b981"></span>P2 (5/6~): 버그 수정 후 정상 구간, 수집 중</span>
-      <span><span class="legend-dot" style="background:#ef4444;border-radius:0;width:2px;height:10px;display:inline-block;margin-right:4px;vertical-align:middle"></span>오늘 5/13 (실험 종료일)</span>
+      <span><span class="legend-dot" style="background:#10b981"></span>P2 (5/6~5/12): 버그 수정 후 정상 구간, 실험 종료</span>
+      <span style="font-weight:600;color:#ef4444">● 5/13 실험 종료</span>
     </div>
   </div>
 </div>
@@ -298,7 +297,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         </div>
       </div>
       <div style="background:#f9fafb;border-radius:8px;padding:10px 14px">
-        <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 PF0 선택률 <span style="background:#d1fae5;color:#065f46;border-radius:3px;padding:1px 5px;font-size:9px;margin-left:4px">수집 중</span></div>
+        <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 PF0 선택률 <span style="background:#d1fae5;color:#065f46;border-radius:3px;padding:1px 5px;font-size:9px;margin-left:4px">실험 종료</span></div>
         <div style="font-size:13px;color:#374151">
           <span style="color:#9ca3af;font-size:12px">A 20.3%</span>
           &nbsp;→&nbsp; <strong style="color:#7c3aed">B 24.8%</strong> <span style="font-size:11px;color:#059669;font-weight:700">+4.5%p</span>
@@ -315,7 +314,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
       A군 23.9%·20.2%는 업셀링 화면 없이 결제 화면에서 고객이 자발 선택한 <strong>자연 비율 (기준선)</strong>. B·C군의 +2~4.6%p가 바텀시트가 새로 만들어낸 전환.
     </div>
     <div style="margin-top:6px;font-size:11px;color:#9ca3af">
-      <span style="color:#f59e0b;font-weight:700">⚠</span>&nbsp; P2는 단기 반납(당일~2박) 위주 집계 · 3박 이상 미포함 · 5/13 실험 종료 후 확정
+      <span style="color:#f59e0b;font-weight:700">⚠</span>&nbsp; P2는 단기 반납(당일~2박) 위주 집계 · 3박 이상 미포함 · 5/13 실험 종료 (5/14 D+1 반납분 최종 반영 예정)
     </div>
   </div>
 </div>
@@ -324,11 +323,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
 <div class="main">
 
   <!-- ① HERO RESULTS -->
-  <div class="section-label" style="margin-top:20px">PF0 선택률 실험 결과 <span class="tag tag-warn">P1 확정</span> <span class="tag tag-ok">P2 수집 중</span></div>
+  <div class="section-label" style="margin-top:20px">PF0 선택률 실험 결과 <span class="tag tag-warn">P1 확정</span> <span class="tag tag-ok">P2 실험 종료</span></div>
   <div class="hero-card">
     <div class="hero-top">
       <div>
-        <div class="hero-top-title">실험 종료 D-1, 현재까지 결론</div>
+        <div class="hero-top-title">실험 종료, 최종 결론</div>
         <div class="hero-top-verdict">B/C군 PF0 선택률 유의미 상승 &nbsp;<span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6)">P1: B 26.0% / C 25.9% &nbsp;|&nbsp; P2: B 24.8% / C 24.2% &nbsp;(vs A 기준선)</span></div>
       </div>
     </div>
@@ -381,7 +380,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
           <tr style="background:#f9fafb">
             <td style="padding:14px 0;vertical-align:top;border-top:1px solid #eef0f0">
               <div style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#6b7280">
-                <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#10b981;flex-shrink:0"></span>P2 수집 중
+                <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#10b981;flex-shrink:0"></span>P2 실험 종료
               </div>
               <div style="font-size:10px;color:#9ca3af;margin-top:2px;padding-left:13px">5/6~5/12</div>
               <div style="font-size:10px;color:#f59e0b;margin-top:1px;padding-left:13px">단기 위주 집계 (3박+ 예약은 아직 반납 전이라 미포함)</div>
@@ -466,7 +465,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   <!-- ② P2 PIPELINE FUNNEL -->
   <div class="pipeline-card">
     <div class="pipe-title">업셀링 화면 흐름 (B+C군 합산)</div>
-    <div class="pipe-subtitle">P2 기준 (5/6~5/12 / 7일 / 단기 위주, 3박+ 반납 전 미포함 / 수집 중)</div>
+    <div class="pipe-subtitle">P2 기준 (5/6~5/12 / 7일 / 단기 위주, 3박+ 반납 전 미포함 / 실험 종료)</div>
     <div class="pipe-flow">
       <div class="pipe-step pipe-highlight">
         <div class="pipe-box">
@@ -570,8 +569,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     </div>
   </div>
 
-  <!-- ④ 군별 카드 (P1 확정 + P2 수집 중) -->
-  <div class="section-label">군별 상세 <span class="tag tag-warn">P1 확정 4/29~5/5</span> <span class="tag tag-ok">P2 수집 중 5/6~5/12</span></div>
+  <!-- ④ 군별 카드 (P1 확정 + P2 실험 종료) -->
+  <div class="section-label">군별 상세 <span class="tag tag-warn">P1 확정 4/29~5/5</span> <span class="tag tag-ok">P2 실험 종료 5/6~5/12</span></div>
   <div class="alert-info">
     <strong>A군</strong>: 업셀링 바텀시트 미노출. 기존 결제 화면에서 스스로 PF0를 선택한 고객만 집계 → 업셀링 없는 <strong>자연 선택 기준선</strong><br>
     <strong>B·C군</strong>: 업셀링 바텀시트 노출. 전체 선택률에 자발 선택(A군 수준) + 바텀시트 경유 신규 전환이 합산됨<br><br>
@@ -598,7 +597,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         </div>
         <div class="grp-divider"></div>
         <div style="background:#f9fafb;border-radius:8px;padding:10px 12px">
-          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 수집 중 / 5/6~5/12</div>
+          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 실험 종료 / 5/6~5/12</div>
           <div style="font-size:24px;font-weight:900;color:#2563eb;line-height:1">20.3%</div>
           <div style="font-size:11px;color:#9ca3af;margin-top:3px;margin-bottom:6px">
             3,792건 / 18,666건
@@ -631,7 +630,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         </div>
         <div class="grp-divider"></div>
         <div style="background:#f9fafb;border-radius:8px;padding:10px 12px">
-          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 수집 중 / 5/6~5/12</div>
+          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 실험 종료 / 5/6~5/12</div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:3px">
             <span style="font-size:24px;font-weight:900;color:#7c3aed;line-height:1">24.8%</span>
             <span style="font-size:12px;font-weight:800;padding:2px 7px;border-radius:20px;background:#dcfce7;color:#166534">▲ +4.5%p</span>
@@ -671,7 +670,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         </div>
         <div class="grp-divider"></div>
         <div style="background:#f9fafb;border-radius:8px;padding:10px 12px">
-          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 수집 중 / 5/6~5/12</div>
+          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 실험 종료 / 5/6~5/12</div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:3px">
             <span style="font-size:24px;font-weight:900;color:#16a34a;line-height:1">24.2%</span>
             <span style="font-size:12px;font-weight:800;padding:2px 7px;border-radius:20px;background:#dcfce7;color:#166534">▲ +3.9%p</span>
@@ -697,7 +696,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   </div>
 
   <!-- B/C군 넛지 효과 검증 -->
-  <div class="section-label" style="margin-top:8px">넛지 강조 효과 검증 (B군 vs C군) <span class="tag tag-gray">넛지 추가 유무 외 조건 동일</span> <span class="tag tag-ok">P1 기준 유의미한 차이 없음</span> <span class="tag tag-warn">P2 수집 중 (최종 판단 5/13 이후)</span></div>
+  <div class="section-label" style="margin-top:8px">넛지 강조 효과 검증 (B군 vs C군) <span class="tag tag-gray">넛지 추가 유무 외 조건 동일</span> <span class="tag tag-ok">P1 기준 유의미한 차이 없음</span> <span class="tag tag-warn">P2 실험 종료 (B-C +0.6%p, 유의미한 차이 없음)</span></div>
 
   <!-- ─── DECISION ─── -->
   <hr class="phase-divider">
@@ -729,7 +728,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
 
   <!-- ─── INSIGHT ─── -->
   <div class="insight-box">
-    <h3>현재까지 해석 (P1+P2 기준, 5/13)</h3>
+    <h3>최종 해석 (P1+P2 기준, 실험 종료 5/13)</h3>
     <div class="insight-list">
       <div class="insight-item">
         <span class="insight-icon">🟢</span>
@@ -741,7 +740,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟡</span>
-        <span class="insight-text"><strong>B(넛지 포함)와 C(바텀시트만) 선택률 차이: P1 0.1%p, P2 0.6%p로 여전히 작음.</strong> 최종 판단은 5/13 종료 후 확정.</span>
+        <span class="insight-text"><strong>B(넛지 포함)와 C(바텀시트만) 선택률 차이: P1 0.1%p, P2 0.6%p로 여전히 작음.</strong> 최종 판단: 유의미한 차이 없음 (P1 0.1%p, P2 0.6%p 수준).</span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟡</span>
@@ -749,12 +748,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟡</span>
-        <span class="insight-text"><strong>P2 수치는 5/13 종료 후 최종 확정.</strong> 현재 5/6~5/12 반납 완료분 집계 → 당일~2박 단기 위주.<br>
-          객단가는 낮게 보임 (3박+ 장기 미포함. P1은 7일 완료라 장기 포함). PF0 선택률은 예약 시점 기준으로 유효.</span>
+        <span class="insight-text"><strong>P2 수치는 5/6~5/12 반납 완료분 기준 집계 완료.</strong> 당일~2박 단기 위주라 객단가 낮게 보임 (3박+ 미포함. P1은 7일 완료라 장기 포함). PF0 선택률은 예약 시점 기준으로 유효.<br>
+          5/14 D+1 이후 5/13 반납분 추가 반영 예정.</span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🔵</span>
-        <span class="insight-text"><strong>5/13 종료 후 확인:</strong> P2 선택률/객단가/PF매출 확정, B vs C 최종 판단, 정규화 여부.</span>
+        <span class="insight-text"><strong>5/14 D+1 후 확인 예정:</strong> 5/13 반납분 반영 후 P2 수치 최종 확정, 정규화 여부 결정.</span>
       </div>
     </div>
   </div>
@@ -835,7 +834,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
           <span class="exp-phase-dot" style="background:#10b981"></span>
           <span class="exp-phase-name">P2 (정상 구간)</span>
         </div>
-        <div class="exp-phase-range">5월 6일 09:48 수정 배포 ~ 5월 13일 실험 종료 (수집 중)</div>
+        <div class="exp-phase-range">5월 6일 09:48 수정 배포 ~ 5월 13일 실험 종료</div>
         <div class="exp-why">
           <strong>버그 수정 후</strong> 전체 B/C군 정상 노출. 예약 생성 시각(created_at_kst)으로 P1/P2 분리.
         </div>
