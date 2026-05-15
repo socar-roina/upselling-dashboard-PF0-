@@ -256,7 +256,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     <h1>업셀링 PF0 실험 모니터링 대시보드</h1>
     <div class="meta">A군 대조 (업셀링 없음) / B군 업셀링+넛지 ON (하이라이트 강조 있음) / C군 업셀링+넛지 OFF (강조 없음) | 비즈/법인 제외 | 실험 종료 5/13 14:00 (시간연장 추가 배포 직전)</div>
   </div>
-  <div class="updated">데이터 기준: 예약 생성 ~5/13 14:00 KST (BQ)<br>수치 확정: P1·P2 최종 (시간연장 배포 직전 컷오프)</div>
+  <div class="updated">데이터 기준: ~5/13 14:00 예약 (BQ)<br>수치 확정: P1·P2 최종 (시간연장 추가 배포 직전 마감)</div>
 </div>
 
 <!-- ─── TIMELINE ─── -->
@@ -275,7 +275,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     <div class="timeline-legend">
       <span><span class="legend-dot" style="background:#fbbf24"></span>P1 (4/29~5/5): 일부 회원 미노출 버그 기간, 수치 확정</span>
       <span><span class="legend-dot" style="background:#10b981"></span>P2 (5/6~5/13 14:00): 버그 수정 후 정상 구간, 시간연장 추가 배포 직전까지</span>
-      <span style="font-weight:600;color:#ef4444">● 5/13 14:00 시간연장 배포 (PF0-only 실험 컷오프)</span>
+      <span style="font-weight:600;color:#ef4444">● 5/13 14:00 시간연장 배포 (PF0 단독 실험 마감)</span>
     </div>
   </div>
 </div>
@@ -314,7 +314,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
       A군 23.9%·21.1%는 업셀링 화면 없이 결제 화면에서 고객이 자발 선택한 <strong>자연 비율 (기준선)</strong>. B·C군의 +2~4.5%p가 바텀시트가 새로 만들어낸 전환.
     </div>
     <div style="margin-top:6px;font-size:11px;color:#9ca3af">
-      <span style="color:#f59e0b;font-weight:700">⚠</span>&nbsp; P1·P2 측정 방법 다름: P1은 반납 시각(return_at) 4/29~5/5, P2는 예약 생성 시각(created_at) 5/6 09:48~5/13 14:00. PF0 선택률은 예약 시점 결정이라 두 구간 비교 유효, 객단가는 P2가 단기 비중 약간 높아(2박+ P1 6.6%/P2 2.1%) 다소 낮게 나옴.
+      <span style="color:#f59e0b;font-weight:700">⚠</span>&nbsp; P1은 반납 시점 기준 4/29~5/5, P2는 예약 생성 시점 기준 5/6 09:48~5/13 14:00 집계 (실험 구조 차이). PF0 선택은 예약 시점에 결정되므로 두 구간 비교 유효. 객단가는 P2가 짧은 예약 비중 살짝 높아(2박+ P1 6.6%/P2 2.1%) 다소 낮게 나옴.
     </div>
   </div>
 </div>
@@ -328,7 +328,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     <div class="hero-top">
       <div>
         <div class="hero-top-title">실험 종료, 최종 결론</div>
-        <div class="hero-top-verdict">PF0 선택률 최대 <span style="color:#86efac">+4.5%p</span> 증가 &nbsp;<span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.5)">P1·P2 두 구간 모두 유의미 상승 (z=11.0) &nbsp;·&nbsp; 업셀링으로 인한 예약 취소 0건</span></div>
+        <div class="hero-top-verdict">PF0 선택률 최대 <span style="color:#86efac">+4.5%p</span> 증가 &nbsp;<span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.5)">P1·P2 두 구간 모두 통계적으로 매우 확실한 상승 &nbsp;·&nbsp; 업셀링으로 인한 예약 취소 0건</span></div>
       </div>
     </div>
 
@@ -408,9 +408,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     </div>
     <!-- 통계 유의성 근거 -->
     <div style="margin:0 28px 16px;padding:10px 14px;background:#f0fdf4;border-radius:8px;border-left:3px solid #22c55e;font-size:12px;color:#374151;line-height:1.6">
-      <strong style="color:#059669">통계적으로 유의미한 차이 확인</strong> (2비율 z-검정, p &lt; 0.0001)<br>
-      B·C군 선택률이 A군보다 높은 것이 우연일 확률 0.01% 미만. 군당 P1 약 16,300명/P2 약 21,800명 표본이며, P1·P2 두 구간에서 같은 방향으로 일관되게 나타남.<br>
-      <span style="color:#9ca3af;font-size:11px">P1: A vs B z=4.4 / A vs C z=4.2 · P2: A vs B z=11.0 / A vs C z=10.5 · 유의수준 α=0.05</span>
+      <strong style="color:#059669">우연이 아니라 진짜 효과로 확인됨</strong><br>
+      B·C군이 A군보다 PF0를 더 선택한 결과가 우연일 확률은 <strong>0.01% 미만</strong>. 군당 P1 약 16,300명 / P2 약 21,800명이 참여한 데이터로, P1·P2 두 구간 모두 같은 방향으로 일관되게 효과 확인.<br>
+      <span style="color:#9ca3af;font-size:11px">검정 방법: 2비율 z-검정 (P1 z=4.2~4.4 / P2 z=10.5~11.0, 모두 통계적 유의성 기준 충족)</span>
     </div>
   </div>
 
@@ -467,7 +467,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   <!-- ② P2 PIPELINE FUNNEL -->
   <div class="pipeline-card">
     <div class="pipe-title">업셀링 화면 흐름 (B+C군 합산)</div>
-    <div class="pipe-subtitle">P2 기준 (5/6 09:48~5/13 14:00 / 약 7.2일 / created_at 기준 / 시간연장 배포 직전 컷오프)</div>
+    <div class="pipe-subtitle">P2 기준 (5/6 09:48~5/13 14:00 / 약 7.2일 / 예약 생성 시점 기준 / 시간연장 추가 배포 직전 마감)</div>
     <div class="pipe-flow">
       <div class="pipe-step pipe-highlight">
         <div class="pipe-box">
@@ -498,7 +498,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   </div>
 
   <!-- 노출 기준 PF0 수락 비율 (B·C 비교) -->
-  <div class="section-label">노출 기준 PF0 수락 비율 (B·C 비교) <span class="tag tag-blue">업셀링 화면을 본 회원 중 PF0 선택 비율 · 약 7%</span> <span class="tag tag-warn">P1 회원 단위 (4/29~5/5)</span> <span class="tag tag-gray">넛지 유무가 선택률에 영향 미치는지 확인</span></div>
+  <div class="section-label">업셀링 화면 본 회원 기준 PF0 선택 비율 (B·C 비교) <span class="tag tag-blue">화면을 실제 본 회원만 분모로 한 결과 · 약 7%</span> <span class="tag tag-warn">P1 회원 단위 (4/29~5/5)</span> <span class="tag tag-gray">강조 표시 유무가 선택률에 영향 미치는지 확인</span></div>
+  <div style="background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:14px;font-size:12px;color:#374151;line-height:1.6">
+    <strong style="color:#92400e">📌 위 25.6%와 아래 7%는 "같은 결과"를 다른 기준으로 본 것입니다</strong> (둘 다 PF0 최종 예약 완료 결과)<br>
+    <span style="color:#6b7280">· <strong>25.6%</strong> → B군 <strong>전체 완료 예약</strong> 21,569건 중 PF0 선택 비율 (A군 21.1% 대비 +4.5%p 증가)<br>
+    · <strong>7%</strong> → B군 중 <strong>업셀링 화면을 실제 본 회원</strong>만 따로 보면 PF0 최종 예약 비율<br>
+    → 분모가 다를 뿐 둘 다 "최종 예약 완료" 결과 (시도 vs 완료의 차이가 아님)</span>
+  </div>
   <div class="bc-compare-row">
     <div class="bc-card" style="border-top:3px solid #8b5cf6">
       <div class="bc-card-head">
@@ -543,7 +549,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   <div class="chart-row-full">
     <div class="chart-card">
       <h3>A/B/C군 PF0 선택률 P1+P2 연속 추이</h3>
-      <div class="chart-sub">비즈/법인 제외 / "|" 는 5/6 버그 수정 경계 (해당일 데이터 제외) / 5/13*: 14:00 이전 created_at 예약만 (시간연장 배포 직전)</div>
+      <div class="chart-sub">비즈/법인 제외 / "|" 는 5/6 버그 수정 경계 (해당일 데이터 제외) / 5/13*: 14:00 이전 생성된 예약만 (시간연장 추가 배포 직전)</div>
       <div class="chart-wrap-tall"><canvas id="pf0Chart"></canvas></div>
       <div class="chart-interpret">
         <span class="chart-interpret-icon">💡</span>
@@ -729,9 +735,49 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     </div>
   </div>
 
+  <!-- ─── REVENUE PROJECTION ─── -->
+  <div class="section-label">예상 매출 증분 효과 <span class="tag tag-blue">P2 실측 기반</span> <span class="tag tag-gray">100% 배포 환산</span></div>
+  <div style="background:white;border-radius:12px;border:1px solid #e5e7eb;padding:18px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04)">
+    <div style="font-size:11px;color:#6b7280;margin-bottom:14px;line-height:1.5">
+      P2 실험 기간(5/6~5/13) 동안 예약 1건당 평균 보험 매출 상승분을 기준으로, 전체 사용자에게 배포한다고 가정해 단순 환산. <span style="color:#9ca3af">(연휴·시즌 영향 미반영)</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px">
+      <div style="background:#f5f3ff;border-radius:10px;padding:14px 18px;border-left:4px solid #8b5cf6">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px;background:#f3e8ff;color:#7e22ce">B 수준</span>
+          <span style="font-size:11px;color:#6b7280">강조 표시 있음</span>
+        </div>
+        <div style="font-size:11px;color:#9ca3af;margin-bottom:3px">예약 1건당 보험 매출 +672원</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span style="font-size:32px;font-weight:900;color:#7c3aed;line-height:1">연 약 22억원</span>
+          <span style="font-size:12px;color:#9ca3af">증분 예상</span>
+        </div>
+        <div style="font-size:11px;color:#6b7280;line-height:1.5">일 매출 증분 약 610만원 × 365일</div>
+      </div>
+      <div style="background:#f0fdf4;border-radius:10px;padding:14px 18px;border-left:4px solid #22c55e">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px;background:#dcfce7;color:#166534">C 수준</span>
+          <span style="font-size:11px;color:#6b7280">강조 표시 없음</span>
+        </div>
+        <div style="font-size:11px;color:#9ca3af;margin-bottom:3px">예약 1건당 보험 매출 +469원</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span style="font-size:32px;font-weight:900;color:#16a34a;line-height:1">연 약 15.5억원</span>
+          <span style="font-size:12px;color:#9ca3af">증분 예상</span>
+        </div>
+        <div style="font-size:11px;color:#6b7280;line-height:1.5">일 매출 증분 약 425만원 × 365일</div>
+      </div>
+    </div>
+    <div style="background:#fffbeb;border-radius:8px;padding:10px 14px;font-size:12px;color:#374151;line-height:1.55;border-left:3px solid #fbbf24">
+      <strong style="color:#92400e">💡 보수적으로는 C 수준 (연 약 15.5억원)으로 보는 것을 권장.</strong> 강조 표시 효과(B-C +0.2%p)는 통계적으로 의미 있는 수준이 아니라, 실제 배포 시 B와 C 사이 어느 값에 가까울지 단정 어려움.
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:#9ca3af;line-height:1.6">
+      계산 근거: P2 일평균 예약 약 9,080건 × 예약 1건당 평균 보험 매출 상승분(B 672원 / C 469원) × 365일. 단순 곱셈이라 시즌·연휴·장기 예약 영향 미반영.
+    </div>
+  </div>
+
   <!-- ─── INSIGHT ─── -->
   <div class="insight-box">
-    <h3>최종 해석 (P1+P2 기준 · P2 컷오프 5/13 14:00 시간연장 배포 직전)</h3>
+    <h3>최종 해석 (P1+P2 기준 · 5/13 14:00 시간연장 추가 배포 직전 마감)</h3>
     <div class="insight-list">
       <div class="insight-item">
         <span class="insight-icon">🟢</span>
@@ -751,11 +797,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟡</span>
-        <span class="insight-text"><strong>P1·P2 측정 방법 다름 (실험 설계 차이):</strong> P1=반납 시각(return_at) 기준, P2=예약 생성 시각(created_at) 기준. 버그 기간(P1)은 노출 시점이 신뢰 불가하여 반납 시각으로, 정상 구간(P2)은 버그 수정 이후 생성된 예약만 정확히 포착하려고 created_at 사용. PF0 선택률은 예약 시점 결정이라 두 구간 모두 유효. 객단가는 P2가 단기 비중 약간 높아(2박+ P1 6.6%→P2 2.1%) 다소 낮게 나옴.</span>
+        <span class="insight-text"><strong>P1·P2 측정 기준 다름 (실험 설계 차이):</strong> P1=반납 시점 기준, P2=예약 생성 시점 기준. 버그 기간(P1)은 화면 노출 시점을 신뢰할 수 없어 반납 시점으로, 정상 구간(P2)은 버그 수정 이후 새로 생성된 예약만 정확히 포착하려고 예약 생성 시점으로 집계. PF0 선택은 예약 시점에 결정되는 결과라 두 구간 모두 유효. 객단가는 P2가 짧은 예약 비중 살짝 높아(2박 이상 비중 P1 6.6%→P2 2.1%) 다소 낮게 나옴.</span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🔵</span>
-        <span class="insight-text"><strong>5/13 14:00 이후:</strong> 시간연장 업셀링 동시 노출이라 PF0-only 실험에서 제외. 정규화 여부는 별도 데이터로 결정 예정.</span>
+        <span class="insight-text"><strong>5/13 14:00 이후:</strong> 시간연장 업셀링이 함께 노출되기 시작해 PF0 단독 효과 측정이 어려워 실험 마감. 이후 데이터는 PF0+시간연장 합산 효과로 별도 분석 예정.</span>
       </div>
     </div>
   </div>
@@ -821,10 +867,10 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         </div>
         <div class="exp-phase-range">4월 29일 ~ 5월 5일 (7일)</div>
         <div class="exp-why">
-          <strong>서버 버그</strong>로 비즈니스 프로필 등록 일반 회원에게 바텀시트 미표시. B/C군 배정이지만 업셀링 못 본 사람 포함. 노출 시점이 신뢰 불가하여 <strong>반납 시각(return_at) 기준</strong>으로 집계.
+          <strong>서버 버그</strong>로 비즈니스 프로필 등록 일반 회원에게 바텀시트 미표시. B/C군 배정이지만 업셀링 못 본 사람 포함. 화면 노출 시점을 신뢰할 수 없어 <strong>반납 시점 기준</strong>으로 집계.
         </div>
         <div class="exp-criteria">
-          <div class="exp-crit-row"><span class="exp-crit-key">집계 기준</span><span class="exp-crit-val">반납 완료 시각(return_at_kst) 4/29~5/5</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">집계 기준</span><span class="exp-crit-val">반납 시점 4/29~5/5</span></div>
           <div class="exp-crit-row"><span class="exp-crit-key">제외 처리</span><span class="exp-crit-val">비즈니스 프로필/법인 예약 제외</span></div>
           <div class="exp-crit-row"><span class="exp-crit-key">예약 건수</span><span class="exp-crit-val">49,200건 (A 16,597 / B 16,322 / C 16,281)</span></div>
           <div class="exp-crit-row"><span class="exp-crit-key">집계 상태</span><span class="exp-crit-val">전 기간 반납 완료 → 수치 확정</span></div>
@@ -836,12 +882,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
           <span class="exp-phase-dot" style="background:#10b981"></span>
           <span class="exp-phase-name">P2 (정상 구간)</span>
         </div>
-        <div class="exp-phase-range">5월 6일 09:48 수정 배포 ~ 5월 13일 14:00 (시간연장 추가 배포 직전 컷오프)</div>
+        <div class="exp-phase-range">5월 6일 09:48 수정 배포 ~ 5월 13일 14:00 (시간연장 추가 배포 직전 마감)</div>
         <div class="exp-why">
-          <strong>버그 수정 후</strong> 전체 B/C군 정상 노출. 버그 수정 이후 새로 생성된 예약만 정확히 포착하려고 <strong>예약 생성 시각(created_at) 기준</strong>으로 집계 (P1의 return_at 기준과 다름).
+          <strong>버그 수정 후</strong> 전체 B/C군 정상 노출. 버그 수정 이후 새로 생성된 예약만 정확히 포착하려고 <strong>예약 생성 시점 기준</strong>으로 집계 (P1과 기준 시점 다름).
         </div>
         <div class="exp-criteria">
-          <div class="exp-crit-row"><span class="exp-crit-key">집계 기준</span><span class="exp-crit-val">예약 생성 5/6 09:48 ~ 5/13 14:00</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">집계 기준</span><span class="exp-crit-val">예약 생성 시점 5/6 09:48 ~ 5/13 14:00</span></div>
           <div class="exp-crit-row"><span class="exp-crit-key">제외 처리</span><span class="exp-crit-val">동일 (비즈니스 프로필/법인 BQ 조인 제외)</span></div>
           <div class="exp-crit-row"><span class="exp-crit-key">예약 건수</span><span class="exp-crit-val">65,372건 (A 22,047 / B 21,569 / C 21,756)</span></div>
           <div class="exp-crit-row"><span class="exp-crit-key">집계 상태</span><span class="exp-crit-val">전 기간 반납 완료 → 수치 확정 (객단가는 단기 비중 약간 높음 / PF0 선택률은 예약 시점 결정이라 영향 없음)</span></div>
@@ -855,8 +901,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         <div class="exp-common-val">PF0 예약 가능 조건 충족, 비회원/비즈/법인 제외</div>
       </div>
       <div class="exp-common-item">
-        <div class="exp-common-key">버킷 배정 (공통)</div>
-        <div class="exp-common-val">member_id 기반 해시로 A/B/C 33% 균등 배정<br>A: 0~33 / B: 34~66 / C: 67~99</div>
+        <div class="exp-common-key">그룹 배정 (공통)</div>
+        <div class="exp-common-val">회원 ID 기반 해시로 A/B/C 33% 균등 배정<br>A: 0~33 / B: 34~66 / C: 67~99</div>
       </div>
     </div>
   </div>
@@ -866,9 +912,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     <div>* 비즈/법인 제외: socar-data.tianjin_replica.reservation_biz_info (corp_group_id IS NOT NULL OR business_profile_id IS NOT NULL)</div>
     <div>* 버킷: MOD(ABS(FARM_FINGERPRINT(member_id || 'UPSELLING_PF_NUDGE')), 100) | A: 0~33 / B: 34~66 / C: 67~99</div>
     <div>* P1: return_at_kst 4/29~5/5 비즈 제외 / P2: created_at_kst BETWEEN '2026-05-06 09:48' AND '2026-05-13 14:00' AND return_at_kst NOT NULL 비즈 제외 (시간연장 배포 직전 컷)</div>
-    <div>* 직접/간접 전환: socar_app_web_log | P1 노출 회원 단위 (B 9,572명, C 9,708명) | 직접: CTA 클릭 + PF0 예약 | 간접: checkout 화면 자체 선택 + PF0 예약</div>
-    <div>* 이벤트: page_name='upsell_bottomsheet' | member_id 버킷 공식으로 B/C 분리 (reservation_id=NULL, 예약 테이블 직접 join 불가)</div>
-    <div>* P2 객단가/avg_pf는 단기 반납 편향으로 P1과 직접 비교 불가. PF0 선택률은 예약 시점 선택 기준으로 유효.</div>
+    <div>* 직접/간접 전환: socar_app_web_log | P1 노출 회원 단위 (B 9,572명, C 9,708명) | 직접: 바텀시트 결제하기 버튼 클릭 후 PF0 예약 | 간접: 바텀시트 닫고 결제 페이지에서 PF0 직접 선택</div>
+    <div>* 이벤트: page_name='upsell_bottomsheet' | member_id 그룹 공식으로 B/C 분리 (reservation_id=NULL, 예약 테이블 직접 join 불가)</div>
+    <div>* P2 객단가/평균 보험 매출은 짧은 예약 비중이 높아 P1과 직접 비교 불가. PF0 선택률은 예약 시점에 결정되는 결과라 비교 유효.</div>
     <div>* 의사결정 기준: 2025-03-24~2026-03-24 PF타입별 가중평균 기반 레퍼런스</div>
     <div>* 예약 전환율: socar-data.socar_server_3.PREVIEW_CAR_RENTAL → RESERVE_CAR_RENTAL | 고유 memberId 기준 | 4/14~5/11 일별 집계</div>
     <div>* A vs B/C 전환율: 4/29~5/11 전체 기간 | A 78,072명 / B·C 153,044명 | 동일 버킷 공식 적용</div>
