@@ -254,9 +254,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
 <div class="top-bar">
   <div>
     <h1>업셀링 PF0 실험 모니터링 대시보드</h1>
-    <div class="meta">A군 대조 / B군 업셀링+넛지 / C군 업셀링 | 비즈/법인 제외 | 실험 종료 5/13</div>
+    <div class="meta">A군 대조 / B군 업셀링+넛지 / C군 업셀링 | 비즈/법인 제외 | 실험 종료 5/13 14:00 (시간연장 추가 배포 직전)</div>
   </div>
-  <div class="updated">데이터 기준: 반납 완료 ~5/12 (BQ)<br>수치 확정: P1·P2 (5/13 반납분 D+1 미반영)</div>
+  <div class="updated">데이터 기준: 예약 생성 ~5/13 14:00 KST (BQ)<br>수치 확정: P1·P2 최종 (시간연장 배포 직전 컷오프)</div>
 </div>
 
 <!-- ─── TIMELINE ─── -->
@@ -265,7 +265,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     <div class="timeline-label">
       <span style="position:absolute;left:0">실험 시작 4/29</span>
       <span style="position:absolute;left:46.7%;transform:translateX(-50%)">P2 시작 5/6</span>
-      <span style="position:absolute;right:0">종료 5/13</span>
+      <span style="position:absolute;right:0">종료 5/13 14:00</span>
     </div>
     <div class="timeline-track">
       <div class="timeline-p1"></div>
@@ -274,8 +274,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     </div>
     <div class="timeline-legend">
       <span><span class="legend-dot" style="background:#fbbf24"></span>P1 (4/29~5/5): 일부 회원 미노출 버그 기간, 수치 확정</span>
-      <span><span class="legend-dot" style="background:#10b981"></span>P2 (5/6~5/12): 버그 수정 후 정상 구간, 실험 종료</span>
-      <span style="font-weight:600;color:#ef4444">● 5/13 실험 종료</span>
+      <span><span class="legend-dot" style="background:#10b981"></span>P2 (5/6~5/13 14:00): 버그 수정 후 정상 구간, 시간연장 추가 배포 직전까지</span>
+      <span style="font-weight:600;color:#ef4444">● 5/13 14:00 시간연장 배포 (PF0-only 실험 컷오프)</span>
     </div>
   </div>
 </div>
@@ -297,24 +297,24 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         </div>
       </div>
       <div style="background:#f9fafb;border-radius:8px;padding:10px 14px">
-        <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 PF0 선택률 <span style="background:#d1fae5;color:#065f46;border-radius:3px;padding:1px 5px;font-size:9px;margin-left:4px">실험 종료</span></div>
+        <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 PF0 선택률 <span style="background:#d1fae5;color:#065f46;border-radius:3px;padding:1px 5px;font-size:9px;margin-left:4px">최종 (5/13 14:00 컷오프)</span></div>
         <div style="font-size:13px;color:#374151">
-          <span style="color:#9ca3af;font-size:12px">A 20.3%</span>
-          &nbsp;→&nbsp; <strong style="color:#7c3aed">B 24.8%</strong> <span style="font-size:11px;color:#059669;font-weight:700">+4.5%p</span>
-          &nbsp;&nbsp; <strong style="color:#16a34a">C 24.2%</strong> <span style="font-size:11px;color:#059669;font-weight:700">+3.9%p</span>
+          <span style="color:#9ca3af;font-size:12px">A 21.1%</span>
+          &nbsp;→&nbsp; <strong style="color:#7c3aed">B 25.6%</strong> <span style="font-size:11px;color:#059669;font-weight:700">+4.5%p</span>
+          &nbsp;&nbsp; <strong style="color:#16a34a">C 25.4%</strong> <span style="font-size:11px;color:#059669;font-weight:700">+4.2%p</span>
         </div>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#374151;margin-bottom:8px;flex-wrap:wrap">
       <span style="color:#9ca3af;font-size:11px">넛지 효과 (B vs C)</span>
       <strong style="color:#6b7280">유의미한 차이 없음</strong>
-      <span style="font-size:11px;color:#9ca3af">P1 B-C +0.1%p &nbsp;/&nbsp; P2 B-C +0.6%p</span>
+      <span style="font-size:11px;color:#9ca3af">P1 B-C +0.1%p &nbsp;/&nbsp; P2 B-C +0.2%p</span>
     </div>
     <div style="font-size:11px;color:#6b7280;line-height:1.6;background:#f0f9f4;border-radius:6px;padding:8px 12px;border-left:3px solid #86efac">
-      A군 23.9%·20.2%는 업셀링 화면 없이 결제 화면에서 고객이 자발 선택한 <strong>자연 비율 (기준선)</strong>. B·C군의 +2~4.6%p가 바텀시트가 새로 만들어낸 전환.
+      A군 23.9%·21.1%는 업셀링 화면 없이 결제 화면에서 고객이 자발 선택한 <strong>자연 비율 (기준선)</strong>. B·C군의 +2~4.5%p가 바텀시트가 새로 만들어낸 전환.
     </div>
     <div style="margin-top:6px;font-size:11px;color:#9ca3af">
-      <span style="color:#f59e0b;font-weight:700">⚠</span>&nbsp; P2는 단기 반납(당일~2박) 위주 집계 · 3박 이상 미포함 · 5/13 실험 종료 (5/14 D+1 반납분 최종 반영 예정)
+      <span style="color:#f59e0b;font-weight:700">⚠</span>&nbsp; P2는 5/6 09:48~5/13 14:00 생성 예약 기준, 반납 완료분만 집계 (단기 위주). 5/13 14:00 이후는 시간연장 업셀링 동시 노출이라 PF0-only 실험에서 제외.
     </div>
   </div>
 </div>
@@ -323,12 +323,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
 <div class="main">
 
   <!-- ① HERO RESULTS -->
-  <div class="section-label" style="margin-top:20px">PF0 선택률 실험 결과 <span class="tag tag-warn">P1 확정</span> <span class="tag tag-ok">P2 실험 종료</span></div>
+  <div class="section-label" style="margin-top:20px">PF0 선택률 실험 결과 <span class="tag tag-warn">P1 확정</span> <span class="tag tag-ok">P2 최종 (5/13 14:00 컷오프)</span></div>
   <div class="hero-card">
     <div class="hero-top">
       <div>
         <div class="hero-top-title">실험 종료, 최종 결론</div>
-        <div class="hero-top-verdict">PF0 선택률 최대 <span style="color:#86efac">+4.5%p</span> 증가 &nbsp;<span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.5)">P1·P2 두 구간 모두 유의미 상승 &nbsp;·&nbsp; 업셀링으로 인한 예약 취소 0건</span></div>
+        <div class="hero-top-verdict">PF0 선택률 최대 <span style="color:#86efac">+4.5%p</span> 증가 &nbsp;<span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.5)">P1·P2 두 구간 모두 유의미 상승 (z=11.0) &nbsp;·&nbsp; 업셀링으로 인한 예약 취소 0건</span></div>
       </div>
     </div>
 
@@ -380,25 +380,25 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
           <tr style="background:#f9fafb">
             <td style="padding:14px 0;vertical-align:top;border-top:1px solid #eef0f0">
               <div style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#6b7280">
-                <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#10b981;flex-shrink:0"></span>P2 실험 종료
+                <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#10b981;flex-shrink:0"></span>P2 최종
               </div>
-              <div style="font-size:10px;color:#9ca3af;margin-top:2px;padding-left:13px">5/6~5/12</div>
-              <div style="font-size:10px;color:#f59e0b;margin-top:1px;padding-left:13px">단기 위주 집계 (3박+ 예약은 아직 반납 전이라 미포함)</div>
+              <div style="font-size:10px;color:#9ca3af;margin-top:2px;padding-left:13px">5/6 09:48~5/13 14:00 (예약 생성 기준)</div>
+              <div style="font-size:10px;color:#f59e0b;margin-top:1px;padding-left:13px">반납 완료분만 집계 (단기 위주 / 3박+ 미반납 일부 미포함)</div>
             </td>
             <td style="padding:14px 12px;text-align:center;vertical-align:top;border-top:1px solid #eef0f0">
-              <div style="font-size:34px;font-weight:900;line-height:1;color:#2563eb">20.3%</div>
-              <div style="font-size:11px;color:#9ca3af;margin-top:5px">3,792건 / 18,666건</div>
+              <div style="font-size:34px;font-weight:900;line-height:1;color:#2563eb">21.1%</div>
+              <div style="font-size:11px;color:#9ca3af;margin-top:5px">4,658건 / 22,047건</div>
               <div style="display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#f3f4f6;color:#6b7280;margin-top:6px">기준선</div>
             </td>
             <td style="padding:14px 12px;text-align:center;vertical-align:top;border-top:1px solid #eef0f0">
               <div style="font-size:32px;font-weight:900;line-height:1;color:#166534">+4.5%p</div>
-              <div style="font-size:20px;font-weight:800;color:#7c3aed;margin-top:4px">24.8%</div>
-              <div style="font-size:11px;color:#9ca3af;margin-top:3px">4,525건 / 18,243건</div>
+              <div style="font-size:20px;font-weight:800;color:#7c3aed;margin-top:4px">25.6%</div>
+              <div style="font-size:11px;color:#9ca3af;margin-top:3px">5,518건 / 21,569건</div>
             </td>
             <td style="padding:14px 12px;text-align:center;vertical-align:top;border-top:1px solid #eef0f0">
-              <div style="font-size:32px;font-weight:900;line-height:1;color:#166534">+3.9%p</div>
-              <div style="font-size:20px;font-weight:800;color:#16a34a;margin-top:4px">24.2%</div>
-              <div style="font-size:11px;color:#9ca3af;margin-top:3px">4,470건 / 18,473건</div>
+              <div style="font-size:32px;font-weight:900;line-height:1;color:#166534">+4.2%p</div>
+              <div style="font-size:20px;font-weight:800;color:#16a34a;margin-top:4px">25.4%</div>
+              <div style="font-size:11px;color:#9ca3af;margin-top:3px">5,519건 / 21,756건</div>
             </td>
           </tr>
         </tbody>
@@ -407,8 +407,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     <!-- 통계 유의성 근거 -->
     <div style="margin:0 28px 16px;padding:10px 14px;background:#f0fdf4;border-radius:8px;border-left:3px solid #22c55e;font-size:12px;color:#374151;line-height:1.6">
       <strong style="color:#059669">통계적으로 유의미한 차이 확인</strong> (2비율 z-검정, p &lt; 0.0001)<br>
-      B·C군 선택률이 A군보다 높은 것이 우연일 확률 0.01% 미만. 군당 약 16,000명 표본이며, P1·P2 두 구간에서 같은 방향으로 일관되게 나타남.<br>
-      <span style="color:#9ca3af;font-size:11px">검정값: A vs B z=4.4 / A vs C z=4.2 · 유의수준 α=0.05</span>
+      B·C군 선택률이 A군보다 높은 것이 우연일 확률 0.01% 미만. 군당 P1 약 16,300명/P2 약 21,800명 표본이며, P1·P2 두 구간에서 같은 방향으로 일관되게 나타남.<br>
+      <span style="color:#9ca3af;font-size:11px">P1: A vs B z=4.4 / A vs C z=4.2 · P2: A vs B z=11.0 / A vs C z=10.5 · 유의수준 α=0.05</span>
     </div>
   </div>
 
@@ -456,7 +456,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         <div class="pipe-box">
           <div class="pipe-lbl">PF0 선택률 (P1)</div>
           <div class="pipe-num" style="font-size:16px">B 26.0% · C 25.9%</div>
-          <div class="pipe-sub">업셀링 전환 효과: B +2.1%p / C +2.0%p (A 23.9% 대비)<br><span style="color:rgba(255,255,255,0.45);font-size:10px">P2(5/6~5/12): B +4.5%p / C +3.9%p</span></div>
+          <div class="pipe-sub">업셀링 전환 효과: B +2.1%p / C +2.0%p (A 23.9% 대비)<br><span style="color:rgba(255,255,255,0.45);font-size:10px">P2(5/6~5/13 14:00): B +4.5%p / C +4.2%p</span></div>
         </div>
       </div>
     </div>
@@ -465,13 +465,13 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   <!-- ② P2 PIPELINE FUNNEL -->
   <div class="pipeline-card">
     <div class="pipe-title">업셀링 화면 흐름 (B+C군 합산)</div>
-    <div class="pipe-subtitle">P2 기준 (5/6~5/12 / 7일 / 단기 위주, 3박+ 반납 전 미포함 / 실험 종료)</div>
+    <div class="pipe-subtitle">P2 기준 (5/6 09:48~5/13 14:00 / 약 7.2일 / 단기 위주, 3박+ 반납 전 미포함 / 시간연장 배포 직전 컷오프)</div>
     <div class="pipe-flow">
       <div class="pipe-step pipe-highlight">
         <div class="pipe-box">
           <div class="pipe-lbl">바텀시트 노출</div>
-          <div class="pipe-num">40,450건</div>
-          <div class="pipe-sub">B+C 합산<br>B: 20,022 / C: 20,428</div>
+          <div class="pipe-num">48,783건</div>
+          <div class="pipe-sub">B+C 합산<br>B: 24,256 / C: 24,527</div>
           <span class="pipe-pct-badge" style="background:#d1fae5;color:#065f46">= 100%</span>
         </div>
       </div>
@@ -479,24 +479,24 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
       <div class="pipe-step">
         <div class="pipe-box">
           <div class="pipe-lbl">결제하기 버튼 클릭</div>
-          <div class="pipe-num">35,613건</div>
-          <div class="pipe-sub">노출의 88.0%<br>이탈 4,837건 <span style="color:#059669;font-weight:700">▼1.2%p vs P1</span></div>
-          <span class="pipe-pct-badge" style="background:#dcfce7;color:#166534">88.0%</span>
+          <div class="pipe-num">42,657건</div>
+          <div class="pipe-sub">노출의 87.4%<br>이탈 6,126건 <span style="color:#059669;font-weight:700">▼0.6%p vs P1</span></div>
+          <span class="pipe-pct-badge" style="background:#dcfce7;color:#166534">87.4%</span>
         </div>
       </div>
       <div class="pipe-arrow">→</div>
       <div class="pipe-step pipe-result">
         <div class="pipe-box">
           <div class="pipe-lbl">PF0 선택률 (P2)</div>
-          <div class="pipe-num" style="font-size:16px">B 24.8% · C 24.2%</div>
-          <div class="pipe-sub">vs A군 20.3%<br><span style="color:rgba(255,255,255,0.7)">B +4.5%p / C +3.9%p</span></div>
+          <div class="pipe-num" style="font-size:16px">B 25.6% · C 25.4%</div>
+          <div class="pipe-sub">vs A군 21.1%<br><span style="color:rgba(255,255,255,0.7)">B +4.5%p / C +4.2%p</span></div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 노출 기준 PF0 수락 비율 (B·C 비교) -->
-  <div class="section-label">노출 기준 PF0 수락 비율 (B·C 비교) <span class="tag tag-blue">업셀링 화면을 본 회원 중 PF0 선택 비율 · 약 7%</span> <span class="tag tag-gray">넛지 유무가 선택률에 영향 미치는지 확인</span></div>
+  <div class="section-label">노출 기준 PF0 수락 비율 (B·C 비교) <span class="tag tag-blue">업셀링 화면을 본 회원 중 PF0 선택 비율 · 약 7%</span> <span class="tag tag-warn">P1 회원 단위 (4/29~5/5)</span> <span class="tag tag-gray">넛지 유무가 선택률에 영향 미치는지 확인</span></div>
   <div class="bc-compare-row">
     <div class="bc-card" style="border-top:3px solid #8b5cf6">
       <div class="bc-card-head">
@@ -537,11 +537,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   </div>
 
   <!-- ③ CHART: 일별 추이 -->
-  <div class="section-label">PF0 선택률 일별 추이 <span class="tag tag-warn">P1 4/29~5/5</span> <span class="tag tag-ok">P2 5/7~5/12</span></div>
+  <div class="section-label">PF0 선택률 일별 추이 <span class="tag tag-warn">P1 4/29~5/5</span> <span class="tag tag-ok">P2 5/7~5/13</span></div>
   <div class="chart-row-full">
     <div class="chart-card">
       <h3>A/B/C군 PF0 선택률 P1+P2 연속 추이</h3>
-      <div class="chart-sub">비즈/법인 제외 / "|" 는 5/6 버그 수정 경계 (해당일 데이터 제외)</div>
+      <div class="chart-sub">비즈/법인 제외 / "|" 는 5/6 버그 수정 경계 (해당일 데이터 제외) / 5/13*: 14:00 이전 created_at 예약만 (시간연장 배포 직전)</div>
       <div class="chart-wrap-tall"><canvas id="pf0Chart"></canvas></div>
       <div class="chart-interpret">
         <span class="chart-interpret-icon">💡</span>
@@ -556,7 +556,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   <div class="chart-row-full">
     <div class="chart-card">
       <h3>B/C군 일별 이탈률</h3>
-      <div class="chart-sub">P1 평균 B 13.2% / C 13.1% → P2 평균 B 11.9% / C 12.0%</div>
+      <div class="chart-sub">P1 평균 B 13.2% / C 13.1% → P2 평균 B 12.7% / C 12.4%</div>
       <div class="chart-wrap-tall"><canvas id="exitRateChart"></canvas></div>
       <div class="chart-interpret">
         <span class="chart-interpret-icon">💡</span>
@@ -569,8 +569,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     </div>
   </div>
 
-  <!-- ④ 군별 카드 (P1 확정 + P2 실험 종료) -->
-  <div class="section-label">군별 상세 <span class="tag tag-warn">P1 확정 4/29~5/5</span> <span class="tag tag-ok">P2 실험 종료 5/6~5/12</span></div>
+  <!-- ④ 군별 카드 (P1 확정 + P2 최종) -->
+  <div class="section-label">군별 상세 <span class="tag tag-warn">P1 확정 4/29~5/5</span> <span class="tag tag-ok">P2 최종 5/6 09:48~5/13 14:00</span></div>
   <div class="alert-info">
     <strong>A군</strong>: 업셀링 바텀시트 미노출. 기존 결제 화면에서 스스로 PF0를 선택한 고객만 집계 → 업셀링 없는 <strong>자연 선택 기준선</strong><br>
     <strong>B·C군</strong>: 업셀링 바텀시트 노출. 전체 선택률에 자발 선택(A군 수준) + 바텀시트 경유 신규 전환이 합산됨<br><br>
@@ -597,17 +597,17 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         </div>
         <div class="grp-divider"></div>
         <div style="background:#f9fafb;border-radius:8px;padding:10px 12px">
-          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 실험 종료 / 5/6~5/12</div>
-          <div style="font-size:24px;font-weight:900;color:#2563eb;line-height:1">20.3%</div>
+          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 최종 / 5/6 09:48~5/13 14:00</div>
+          <div style="font-size:24px;font-weight:900;color:#2563eb;line-height:1">21.1%</div>
           <div style="font-size:11px;color:#9ca3af;margin-top:3px;margin-bottom:6px">
-            3,792건 / 18,666건
+            4,658건 / 22,047건
             <div style="font-size:10px;margin-top:2px"><span style="color:#f59e0b;font-weight:600">단기 위주 집계</span> · 3박+ 반납 전 미포함</div>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:11px">
-            <span style="color:#9ca3af">평균 객단가</span><span style="font-weight:600">57,755원 <span class="diff-badge diff-neutral">기준</span></span>
+            <span style="color:#9ca3af">평균 객단가</span><span style="font-weight:600">60,431원 <span class="diff-badge diff-neutral">기준</span></span>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:3px">
-            <span style="color:#9ca3af">평균 PF 매출</span><span style="font-weight:600">4,225원 <span class="diff-badge diff-neutral">기준</span></span>
+            <span style="color:#9ca3af">평균 PF 매출</span><span style="font-weight:600">4,548원 <span class="diff-badge diff-neutral">기준</span></span>
           </div>
         </div>
       </div>
@@ -630,24 +630,24 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         </div>
         <div class="grp-divider"></div>
         <div style="background:#f9fafb;border-radius:8px;padding:10px 12px">
-          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 실험 종료 / 5/6~5/12</div>
+          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 최종 / 5/6 09:48~5/13 14:00</div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:3px">
-            <span style="font-size:24px;font-weight:900;color:#7c3aed;line-height:1">24.8%</span>
+            <span style="font-size:24px;font-weight:900;color:#7c3aed;line-height:1">25.6%</span>
             <span style="font-size:12px;font-weight:800;padding:2px 7px;border-radius:20px;background:#dcfce7;color:#166534">▲ +4.5%p</span>
           </div>
           <div style="font-size:11px;color:#9ca3af;margin-bottom:6px">
-            4,525건 / 18,243건
+            5,518건 / 21,569건
             <div style="font-size:10px;margin-top:2px"><span style="color:#f59e0b;font-weight:600">단기 위주 집계</span> · 3박+ 반납 전 미포함</div>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:11px">
-            <span style="color:#9ca3af">평균 객단가</span><span style="font-weight:600">58,859원 <span class="diff-badge diff-up">+1,104원</span></span>
+            <span style="color:#9ca3af">평균 객단가</span><span style="font-weight:600">61,769원 <span class="diff-badge diff-up">+1,338원</span></span>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:3px">
-            <span style="color:#9ca3af">평균 PF 매출</span><span style="font-weight:600">4,951원 <span class="diff-badge diff-up">+726원</span></span>
+            <span style="color:#9ca3af">평균 PF 매출</span><span style="font-weight:600">5,220원 <span class="diff-badge diff-up">+672원</span></span>
           </div>
           <div style="font-size:11px;margin-top:5px;padding-top:5px;border-top:1px solid #e9ebee">
             <div style="color:#9ca3af;margin-bottom:2px">P2 바텀시트 흐름</div>
-            <div style="font-weight:600">노출 20,022 → 결제하기 17,631 → <span style="color:#6b7280">이탈 2,391 (11.9%)</span></div>
+            <div style="font-weight:600">노출 24,256 → 결제하기 21,181 → <span style="color:#6b7280">이탈 3,075 (12.7%)</span></div>
           </div>
         </div>
       </div>
@@ -670,24 +670,24 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         </div>
         <div class="grp-divider"></div>
         <div style="background:#f9fafb;border-radius:8px;padding:10px 12px">
-          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 실험 종료 / 5/6~5/12</div>
+          <div style="font-size:10px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">P2 최종 / 5/6 09:48~5/13 14:00</div>
           <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:3px">
-            <span style="font-size:24px;font-weight:900;color:#16a34a;line-height:1">24.2%</span>
-            <span style="font-size:12px;font-weight:800;padding:2px 7px;border-radius:20px;background:#dcfce7;color:#166534">▲ +3.9%p</span>
+            <span style="font-size:24px;font-weight:900;color:#16a34a;line-height:1">25.4%</span>
+            <span style="font-size:12px;font-weight:800;padding:2px 7px;border-radius:20px;background:#dcfce7;color:#166534">▲ +4.2%p</span>
           </div>
           <div style="font-size:11px;color:#9ca3af;margin-bottom:6px">
-            4,470건 / 18,473건
+            5,519건 / 21,756건
             <div style="font-size:10px;margin-top:2px"><span style="color:#f59e0b;font-weight:600">단기 위주 집계</span> · 3박+ 반납 전 미포함</div>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:11px">
-            <span style="color:#9ca3af">평균 객단가</span><span style="font-weight:600">57,845원 <span class="diff-badge diff-up">+90원</span></span>
+            <span style="color:#9ca3af">평균 객단가</span><span style="font-weight:600">60,614원 <span class="diff-badge diff-up">+183원</span></span>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:3px">
-            <span style="color:#9ca3af">평균 PF 매출</span><span style="font-weight:600">4,739원 <span class="diff-badge diff-up">+514원</span></span>
+            <span style="color:#9ca3af">평균 PF 매출</span><span style="font-weight:600">5,017원 <span class="diff-badge diff-up">+469원</span></span>
           </div>
           <div style="font-size:11px;margin-top:5px;padding-top:5px;border-top:1px solid #e9ebee">
             <div style="color:#9ca3af;margin-bottom:2px">P2 바텀시트 흐름</div>
-            <div style="font-weight:600">노출 20,428 → 결제하기 17,982 → <span style="color:#6b7280">이탈 2,446 (12.0%)</span></div>
+            <div style="font-weight:600">노출 24,527 → 결제하기 21,476 → <span style="color:#6b7280">이탈 3,051 (12.4%)</span></div>
           </div>
         </div>
       </div>
@@ -696,7 +696,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   </div>
 
   <!-- B/C군 넛지 효과 검증 -->
-  <div class="section-label" style="margin-top:8px">넛지 강조 효과 검증 (B군 vs C군) <span class="tag tag-gray">넛지 추가 유무 외 조건 동일</span> <span class="tag tag-ok">P1 기준 유의미한 차이 없음</span> <span class="tag tag-warn">P2 실험 종료 (B-C +0.6%p, 유의미한 차이 없음)</span></div>
+  <div class="section-label" style="margin-top:8px">넛지 강조 효과 검증 (B군 vs C군) <span class="tag tag-gray">넛지 추가 유무 외 조건 동일</span> <span class="tag tag-ok">P1 기준 유의미한 차이 없음</span> <span class="tag tag-warn">P2 최종 (B-C +0.2%p, 유의미한 차이 없음)</span></div>
 
   <!-- ─── DECISION ─── -->
   <hr class="phase-divider">
@@ -728,19 +728,19 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
 
   <!-- ─── INSIGHT ─── -->
   <div class="insight-box">
-    <h3>최종 해석 (P1+P2 기준, 실험 종료 5/13)</h3>
+    <h3>최종 해석 (P1+P2 기준 · P2 컷오프 5/13 14:00 시간연장 배포 직전)</h3>
     <div class="insight-list">
       <div class="insight-item">
         <span class="insight-icon">🟢</span>
-        <span class="insight-text"><strong>버그 기간(P1)과 정상 구간(P2) 모두 B/C군 선택률 상승.</strong> P1: B +2.1%p, C +2.0%p / P2: B +4.5%p, C +3.9%p</span>
+        <span class="insight-text"><strong>버그 기간(P1)과 정상 구간(P2) 모두 B/C군 선택률 상승.</strong> P1: B +2.1%p, C +2.0%p / P2: B +4.5%p, C +4.2%p</span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟢</span>
-        <span class="insight-text"><strong>이탈률 P1 13.2%에서 P2 12.0%로 개선.</strong> P2 일평균 노출 6,742건(P1 4,267건 대비 +58%). 버그 수정으로 기존 미노출 회원 포함.</span>
+        <span class="insight-text"><strong>이탈률 P1 13.2%에서 P2 12.6%로 개선.</strong> P2 일평균 노출 약 6,750건(P1 4,267건 대비 +58%). 버그 수정으로 기존 미노출 회원 포함.</span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟡</span>
-        <span class="insight-text"><strong>B(넛지 포함)와 C(바텀시트만) 선택률 차이: P1 0.1%p, P2 0.6%p로 여전히 작음.</strong> 최종 판단: 유의미한 차이 없음 (P1 0.1%p, P2 0.6%p 수준).</span>
+        <span class="insight-text"><strong>B(넛지 포함)와 C(바텀시트만) 선택률 차이: P1 0.1%p, P2 0.2%p로 여전히 작음.</strong> 최종 판단: 유의미한 차이 없음.</span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟡</span>
@@ -748,12 +748,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟡</span>
-        <span class="insight-text"><strong>P2 수치는 5/6~5/12 반납 완료분 기준 집계 완료.</strong> 당일~2박 단기 위주라 객단가 낮게 보임 (3박+ 미포함. P1은 7일 완료라 장기 포함). PF0 선택률은 예약 시점 기준으로 유효.<br>
-          5/14 D+1 이후 5/13 반납분 추가 반영 예정.</span>
+        <span class="insight-text"><strong>P2 수치는 5/6 09:48 ~ 5/13 14:00 예약 생성 기준, 반납 완료분 집계.</strong> 당일~2박 단기 위주라 객단가 낮게 보임 (3박+ 일부 미반납. P1은 7일 완료라 장기 포함). PF0 선택률은 예약 시점 기준으로 유효.</span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🔵</span>
-        <span class="insight-text"><strong>5/14 D+1 후 확인 예정:</strong> 5/13 반납분 반영 후 P2 수치 최종 확정, 정규화 여부 결정.</span>
+        <span class="insight-text"><strong>5/13 14:00 이후:</strong> 시간연장 업셀링 동시 노출이라 PF0-only 실험에서 제외. 정규화 여부는 별도 데이터로 결정 예정.</span>
       </div>
     </div>
   </div>
@@ -834,15 +833,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
           <span class="exp-phase-dot" style="background:#10b981"></span>
           <span class="exp-phase-name">P2 (정상 구간)</span>
         </div>
-        <div class="exp-phase-range">5월 6일 09:48 수정 배포 ~ 5월 13일 실험 종료</div>
+        <div class="exp-phase-range">5월 6일 09:48 수정 배포 ~ 5월 13일 14:00 (시간연장 추가 배포 직전 컷오프)</div>
         <div class="exp-why">
-          <strong>버그 수정 후</strong> 전체 B/C군 정상 노출. 예약 생성 시각(created_at_kst)으로 P1/P2 분리.
+          <strong>버그 수정 후</strong> 전체 B/C군 정상 노출. 예약 생성 시각(created_at_kst) 기준으로 시간연장 배포 직전까지 컷.
         </div>
         <div class="exp-criteria">
-          <div class="exp-crit-row"><span class="exp-crit-key">집계 기준</span><span class="exp-crit-val">예약 생성 시각 5/6 09:48 이후 + 반납 완료분만 집계</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">집계 기준</span><span class="exp-crit-val">예약 생성 5/6 09:48 ~ 5/13 14:00 + 반납 완료분만 집계</span></div>
           <div class="exp-crit-row"><span class="exp-crit-key">제외 처리</span><span class="exp-crit-val">동일 (비즈니스 프로필/법인 BQ 조인 제외)</span></div>
-          <div class="exp-crit-row"><span class="exp-crit-key">예약 건수</span><span class="exp-crit-val">55,382건 (5/6~5/12 반납 완료 기준)</span></div>
-          <div class="exp-crit-row"><span class="exp-crit-key">주의</span><span class="exp-crit-val">5/12 이전 반납 완료분만 집계 → 단기 예약 위주라 객단가 낮게 보임 (PF0 선택률은 유효)</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">예약 건수</span><span class="exp-crit-val">65,372건 (A 22,047 / B 21,569 / C 21,756)</span></div>
+          <div class="exp-crit-row"><span class="exp-crit-key">주의</span><span class="exp-crit-val">반납 완료분만 집계 → 단기 예약 위주라 객단가 낮게 보임 (PF0 선택률은 예약 시점 기준이라 유효)</span></div>
         </div>
       </div>
 
@@ -863,7 +862,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     <div>* BQ: socar-data.socar_biz_profit.profit_socar_reservation | 반납 완료(return_at_kst) 기준, D+1 갱신</div>
     <div>* 비즈/법인 제외: socar-data.tianjin_replica.reservation_biz_info (corp_group_id IS NOT NULL OR business_profile_id IS NOT NULL)</div>
     <div>* 버킷: MOD(ABS(FARM_FINGERPRINT(member_id || 'UPSELLING_PF_NUDGE')), 100) | A: 0~33 / B: 34~66 / C: 67~99</div>
-    <div>* P1: return_at_kst 4/29~5/5 비즈 제외 / P2: created_at_kst >= '2026-05-06 09:48' AND return_at_kst 5/6~5/12 비즈 제외</div>
+    <div>* P1: return_at_kst 4/29~5/5 비즈 제외 / P2: created_at_kst BETWEEN '2026-05-06 09:48' AND '2026-05-13 14:00' AND return_at_kst NOT NULL 비즈 제외 (시간연장 배포 직전 컷)</div>
     <div>* 직접/간접 전환: socar_app_web_log | P1 노출 회원 단위 (B 9,572명, C 9,708명) | 직접: CTA 클릭 + PF0 예약 | 간접: checkout 화면 자체 선택 + PF0 예약</div>
     <div>* 이벤트: page_name='upsell_bottomsheet' | member_id 버킷 공식으로 B/C 분리 (reservation_id=NULL, 예약 테이블 직접 join 불가)</div>
     <div>* P2 객단가/avg_pf는 단기 반납 편향으로 P1과 직접 비교 불가. PF0 선택률은 예약 시점 선택 기준으로 유효.</div>
@@ -875,18 +874,20 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
 </div>
 
 <script>
-const labels = ['4/29','4/30','5/1','5/2','5/3','5/4','5/5','','5/7','5/8','5/9','5/10','5/11','5/12'];
+const labels = ['4/29','4/30','5/1','5/2','5/3','5/4','5/5','','5/7','5/8','5/9','5/10','5/11','5/12','5/13*'];
 
+// PF0 선택률 = return_at_kst 기준 일별 / 5/13은 14:00 이전 created_at 예약만 (시간연장 배포 직전)
 const pf0 = {
-  A: [20.2, 20.5, 27.5, 28.6, 25.7, 24.0, 22.6, null, 16.9, 19.2, 23.5, 22.8, 17.9, 21.0],
-  B: [20.0, 19.9, 28.8, 31.1, 27.5, 28.4, 27.5, null, 22.5, 23.4, 28.6, 27.2, 23.0, 24.7],
-  C: [20.6, 20.9, 27.8, 32.1, 28.1, 26.6, 26.6, null, 20.5, 20.9, 27.4, 26.4, 23.4, 26.0],
+  A: [20.2, 20.5, 27.5, 28.6, 25.7, 24.0, 22.7, null, 16.9, 19.2, 23.5, 22.8, 17.9, 21.0, 22.3],
+  B: [20.0, 19.9, 28.8, 31.1, 27.5, 28.3, 27.5, null, 22.5, 23.4, 28.6, 27.2, 23.0, 24.7, 26.7],
+  C: [20.6, 20.9, 27.8, 32.1, 28.1, 26.6, 26.5, null, 20.5, 20.9, 27.5, 26.4, 23.4, 26.0, 29.6],
 };
 
-const viewsB = [258, 1718, 2332, 2013, 2309, 2951, 3259, null, 3382, 3375, 2967, 3264, 3509, null];
-const viewsC = [256, 1835, 2235, 1956, 2233, 3018, 3499, null, 3580, 3518, 3136, 3198, 3504, null];
-const exitsB = [50,  257,  331,  237,  312,  397,  388,  null, 370,  401,  349,  376,  486,  null];
-const exitsC = [38,  247,  316,  273,  301,  373,  427,  null, 414,  401,  360,  358,  493,  null];
+// 노출/이탈 = event_date_kst 기준 / 5/13은 14:00 이전 이벤트만
+const viewsB = [258, 1718, 2332, 2013, 2309, 2951, 3259, null, 3382, 3375, 2967, 3265, 3547, 3390, 1373];
+const viewsC = [256, 1835, 2235, 1956, 2233, 3018, 3499, null, 3580, 3518, 3136, 3199, 3543, 3404, 1246];
+const exitsB = [50,  257,  331,  237,  312,  397,  388,  null, 370,  401,  349,  376,  495,  514,  219];
+const exitsC = [38,  247,  316,  273,  301,  373,  427,  null, 414,  401,  360,  358,  500,  525,  145];
 const exitRateB = labels.map((_, i) =>
   (viewsB[i] != null && exitsB[i] != null) ? +((exitsB[i] / viewsB[i] * 100).toFixed(1)) : null
 );
