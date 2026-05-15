@@ -499,27 +499,24 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   </div>
 
   <!-- 노출 기준 PF0 수락 비율 (B·C 비교) -->
-  <div class="section-label">업셀링 화면 본 회원 기준 PF0 선택 비율 (B·C 비교) <span class="tag tag-blue">화면을 실제 본 회원만 분모로 한 결과 · 약 7%</span> <span class="tag tag-warn">P1 회원 단위 (4/29~5/5)</span> <span class="tag tag-gray">강조 표시 유무가 선택률에 영향 미치는지 확인</span></div>
+  <div class="section-label">업셀링 화면 본 회원 기준 PF0 선택 비율 (B·C 비교) <span class="tag tag-warn">P1 / 회원 단위 보조 지표</span> <span class="tag tag-gray">강조 표시 효과 검증용</span></div>
+  <div style="font-size:12px;color:#6b7280;background:#f9fafb;border-radius:8px;padding:10px 14px;margin-bottom:10px;line-height:1.6">
+    바텀시트는 PF0를 기본값으로 안 둔 회원한테만 떠요. 그래서 <strong>노출자 9,572명 = B군 중 PF0 default 아닌 회원만</strong>. 그들 중 PF0로 전환한 비율이 7%예요. 위쪽 25.6%(B군 전체)와는 분모가 달라서 직접 비교 안 되고, 강조 표시(넛지) 효과 비교용 보조 지표예요.
+  </div>
   <div style="background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px;font-size:12px;color:#374151;line-height:1.7">
-    <strong style="color:#92400e;font-size:13px">📌 위 두 수치(25.6% / 7%)는 어떻게 연결되나?</strong>
-    <div style="margin-top:10px;padding:11px 14px;background:white;border-radius:8px;border:1px solid #fde68a">
-      <strong style="color:#111827">B군 25.6% 구조 분해</strong><br>
-      <div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#fffbeb;border-radius:6px;padding:8px 12px;margin:6px 0;color:#374151">
-        B군 PF0율 <strong style="color:#7c3aed">25.6%</strong><br>
-        &nbsp;&nbsp;= 스스로 PF0 고른 사람 <strong>21.1%</strong> <span style="color:#9ca3af">(업셀링 없을 때 비율 = A군 기준)</span><br>
-        &nbsp;&nbsp;+ 바텀시트 효과 <strong style="color:#16a34a">+4.5%p</strong> <span style="color:#9ca3af">(헤드라인 지표)</span>
+    <strong style="color:#92400e;font-size:13px">📌 25.6%와 7%, 같은 효과를 다른 기준으로 본 것</strong>
+    <div style="margin-top:10px;padding:13px 16px;background:white;border-radius:8px;border:1px solid #fde68a">
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:14px;background:#fffbeb;border-radius:6px;padding:10px 14px;color:#374151;line-height:1.9">
+        <strong style="color:#111827">B군 PF0율 25.6% 구조</strong><br>
+        &nbsp;&nbsp;= <strong>21.1%</strong> <span style="color:#6b7280">(업셀링 없어도 PF0 고를 사람 / A군 기준)</span><br>
+        &nbsp;&nbsp;+ <strong style="color:#16a34a">4.5%p</strong> <span style="color:#6b7280">(바텀시트가 새로 만든 PF0 전환 / <span style="color:#92400e;font-weight:700">대표 수치</span>)</span>
       </div>
-      <span style="color:#6b7280">→ 25.6% 안에 이미 "스스로 PF0 고른 사람 21.1%"가 포함돼 있어서, <strong>바텀시트 효과만 떼면 +4.5%p</strong>예요.<br>
-      "노출자의 7%면 전체도 7%여야?" 의문 답: 25.6%에서 21.1%를 빼야 바텀시트가 새로 만든 효과만 보임.</span>
+      <div style="margin-top:10px;color:#374151;font-size:12px;line-height:1.6">
+        <strong>💡 노출자 7%면 전체도 7%여야?</strong> 자연스러운 직관인데, 25.6% 안에 이미 자연 선택 21.1%가 포함돼 있어서 그래요. 바텀시트가 새로 만든 효과만 떼면 +4.5%p.
+      </div>
     </div>
-    <div style="margin-top:8px;padding:11px 14px;background:white;border-radius:8px;border:1px solid #fde68a">
-      <strong style="color:#111827">그럼 7%는?</strong><br>
-      <span style="color:#6b7280">바텀시트 본 9,572명 중 657명 PF0 전환 = 7% <span style="color:#9ca3af">(회원 단위 보조 지표)</span><br>
-      4.5%p(예약 단위)와 측정 단위가 달라 <strong>91% × 7% 같은 곱셈으로 4.5%p가 나오지 않음</strong>.</span>
-    </div>
-    <div style="margin-top:8px;padding:11px 14px;background:white;border-radius:8px;border:1px solid #fde68a">
-      <strong style="color:#111827">펀널의 "노출 91.6%"는 별개 차원</strong><br>
-      <span style="color:#6b7280">B+C군 예약 중 바텀시트 실제 표시 비율. 미노출 8.4%는 PF0를 이미 선택한 회원이라 화면 띄울 필요 없음.</span>
+    <div style="margin-top:8px;font-size:11px;color:#9ca3af;line-height:1.5">
+      ※ <strong>7%</strong> = 바텀시트 본 9,572명 중 657명 PF0 전환 (회원 단위 보조 지표) · <strong>91.6%</strong> = B+C 예약 중 바텀시트 표시 비율 (미노출 8.4%는 PF0 이미 선택한 회원) · 단위가 달라 91%×7% 곱셈으로 4.5%p가 나오지 않음
     </div>
   </div>
   <div class="bc-compare-row">
@@ -835,27 +832,19 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
     <div class="insight-list">
       <div class="insight-item">
         <span class="insight-icon">🟢</span>
-        <span class="insight-text"><strong>버그 기간(P1)과 정상 구간(P2) 모두 B/C군 선택률 상승.</strong> P1: B +2.1%p, C +2.0%p / P2: B +4.5%p, C +4.2%p</span>
+        <span class="insight-text"><strong>P1·P2 두 구간 모두 B/C군 PF0 선택률 상승.</strong> P1: B +2.1%p, C +2.0%p / P2: B +4.5%p, C +4.2%p</span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟢</span>
-        <span class="insight-text"><strong>이탈률 P1 13.2%에서 P2 12.6%로 개선.</strong> P2 일평균 노출 약 6,750건(P1 4,267건 대비 +58%). 버그 수정으로 기존 미노출 회원 포함.</span>
+        <span class="insight-text"><strong>바텀시트 닫기 비율(이탈률) P1 13.2% → P2 12.6%로 개선.</strong></span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🟡</span>
-        <span class="insight-text"><strong>B(넛지 포함)와 C(바텀시트만) 선택률 차이: P1 0.1%p, P2 0.2%p로 여전히 작음.</strong> 최종 판단: 유의미한 차이 없음.</span>
-      </div>
-      <div class="insight-item">
-        <span class="insight-icon">🟡</span>
-        <span class="insight-text"><strong>직접 전환(결제하기 버튼) 91~93%, 간접 전환(결제 페이지 직접 선택) 7~8%.</strong></span>
-      </div>
-      <div class="insight-item">
-        <span class="insight-icon">🟡</span>
-        <span class="insight-text"><strong>P1·P2 측정 기준 다름 (실험 설계 차이):</strong> P1=반납 시점 기준, P2=예약 생성 시점 기준. 버그 기간(P1)은 화면 노출 시점을 신뢰할 수 없어 반납 시점으로, 정상 구간(P2)은 버그 수정 이후 새로 생성된 예약만 정확히 포착하려고 예약 생성 시점으로 집계. PF0 선택은 예약 시점에 결정되는 결과라 두 구간 모두 유효. 예약 1건당 평균 매출은 P2가 짧은 예약 비중 살짝 높아(2박 이상 비중 P1 6.6%→P2 2.1%) 다소 낮게 나옴.</span>
+        <span class="insight-text"><strong>강조 표시(넛지) 효과는 거의 없음.</strong> B-C 차이 P1 0.1%p / P2 0.2%p로 통계적 의미 수준 아님.</span>
       </div>
       <div class="insight-item">
         <span class="insight-icon">🔵</span>
-        <span class="insight-text"><strong>5/13 14:00 이후:</strong> 시간연장 업셀링이 함께 노출되기 시작해 PF0 단독 효과 측정이 어려워 실험 마감. 이후 데이터는 PF0+시간연장 합산 효과로 별도 분석 예정.</span>
+        <span class="insight-text"><strong>5/13 14:00 이후</strong>: 시간연장 업셀링이 함께 노출되어 PF0 단독 효과 측정 어려워져 실험 마감. 이후 데이터는 별도 분석.</span>
       </div>
     </div>
   </div>
