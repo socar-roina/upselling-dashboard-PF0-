@@ -500,17 +500,24 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   <!-- 노출 기준 PF0 수락 비율 (B·C 비교) -->
   <div class="section-label">업셀링 화면 본 회원 기준 PF0 선택 비율 (B·C 비교) <span class="tag tag-blue">화면을 실제 본 회원만 분모로 한 결과 · 약 7%</span> <span class="tag tag-warn">P1 회원 단위 (4/29~5/5)</span> <span class="tag tag-gray">강조 표시 유무가 선택률에 영향 미치는지 확인</span></div>
   <div style="background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:14px;font-size:12px;color:#374151;line-height:1.7">
-    <strong style="color:#92400e">📌 25.6%와 7%는 "같은 결과"를 다른 기준(분모)으로 본 것</strong> (둘 다 PF0 최종 예약 완료 결과)<br>
-    <span style="color:#6b7280">· <strong>25.6% (전체 기준)</strong>: B군에 배정된 <strong>모든 완료 예약 21,569건</strong> 중 PF0 선택 비율<br>
-    &nbsp;&nbsp; → "전체 완료 예약" = 비즈/법인 제외, 그룹에 배정된 회원의 반납 완료 예약 전부<br>
-    · <strong>7% (노출 기준)</strong>: B군 중 <strong>업셀링 화면을 실제 본 9,572명</strong>만 분모로 잡았을 때의 PF0 선택 비율 (P1)</span><br>
-    <span style="background:#fef3c7;border-radius:4px;padding:3px 8px;font-size:11px;color:#92400e;display:inline-block;margin-top:4px"><strong>💡 헤드라인 지표는 왜 +4.5%p인가?</strong></span><br>
-    <span style="color:#6b7280">· 전체 예약 대비 임팩트(=실제 회사 매출에 기여한 크기)를 측정해야 의미 있음<br>
-    · 4.5%p × 전체 예약 9,080건/일 = 일 약 408건의 신규 PF0 전환 (100% 배포 시)<br>
-    · 7%는 노출자 한정 비율이라 회사 전체 임팩트 환산에 직접 쓸 수 없음 (보조 지표)</span><br>
-    <span style="background:#fef3c7;border-radius:4px;padding:3px 8px;font-size:11px;color:#92400e;display:inline-block;margin-top:6px"><strong>💡 위쪽 펀널의 "노출 91.6%"는 별개 개념</strong></span><br>
-    <span style="color:#6b7280">· 91.6% = B+C군 예약 중 바텀시트가 실제 화면에 표시된 비율 (미노출 8.4%는 PF0를 이미 기본으로 선택한 회원이라 화면 띄울 필요 없음)<br>
-    · 91% → 100%로 늘릴 수도 없고, 늘려도 7%·25.6% 수치와 직접 연결되지 않음 (다른 차원의 지표)</span>
+    <strong style="color:#92400e">📌 25.6%·4.5%p·7%는 같은 효과를 다른 방법으로 측정한 것</strong> (분자·분모·방법론 모두 다름)<br>
+    <span style="color:#6b7280">· <strong>25.6% (B군 전체 PF0율)</strong> = 자발 선택 21.1% + 바텀시트 기여 4.5%p<br>
+    &nbsp;&nbsp; → 분모: B군 전체 예약 21,569건 / 분자: PF0 예약 5,518건 (자발 + 바텀시트 모두 포함)<br>
+    · <strong>4.5%p (바텀시트 효과 / 그룹 비교)</strong>: B군 25.6% - A군 21.1% = 바텀시트가 만든 신규 PF0 증가분<br>
+    &nbsp;&nbsp; → 그룹 비교 방법론 / 헤드라인 지표<br>
+    · <strong>7% (바텀시트 효과 / 행동 추적)</strong>: 바텀시트 본 회원 9,572명 중 바텀시트 행동(결제하기 클릭 또는 닫고 PF0 선택)으로 PF0 전환된 657명<br>
+    &nbsp;&nbsp; → attribution 방법론 / 보조 지표 (P1 데이터)</span><br>
+    <span style="background:#fef3c7;border-radius:4px;padding:3px 8px;font-size:11px;color:#92400e;display:inline-block;margin-top:4px"><strong>💡 그럼 "노출자의 7%가 PF0면 전체도 7%여야?" 왜 아님</strong></span><br>
+    <span style="color:#6b7280">· 25.6% 안에 자발 선택 21.1%가 이미 포함 → 25.6%에서 7%만 따로 보이지 않음<br>
+    · 7%는 노출 회원 단위 / 4.5%p는 전체 예약 단위 → 단위가 달라 단순 곱셈 안 됨<br>
+    · 91% 노출률 × 7% 같은 계산으로 4.5%p가 나오지 않음 (서로 다른 방법론)</span><br>
+    <span style="background:#fef3c7;border-radius:4px;padding:3px 8px;font-size:11px;color:#92400e;display:inline-block;margin-top:6px"><strong>💡 헤드라인 지표가 +4.5%p인 이유</strong></span><br>
+    <span style="color:#6b7280">· 전체 예약 대비 임팩트(=회사 매출 기여)를 측정해야 의미 있음<br>
+    · 4.5%p × 전체 예약 9,080건/일 = 일 약 408건의 신규 PF0 (100% 배포 시)<br>
+    · 7%는 노출자 한정 attribution이라 회사 전체 임팩트 환산에 직접 못 씀</span><br>
+    <span style="background:#fef3c7;border-radius:4px;padding:3px 8px;font-size:11px;color:#92400e;display:inline-block;margin-top:6px"><strong>💡 펀널의 "노출 91.6%"는 별개 차원</strong></span><br>
+    <span style="color:#6b7280">· 91.6% = B+C군 예약 중 바텀시트 표시된 비율 (미노출 8.4%는 PF0 기선택자)<br>
+    · 91% → 100% 늘릴 수도 없고, 늘려도 7%·25.6% 수치와 직접 연결 안 됨</span>
   </div>
   <div class="bc-compare-row">
     <div class="bc-card" style="border-top:3px solid #8b5cf6">
@@ -519,7 +526,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         <span>업셀링 + 넛지 ON <span style="color:#9ca3af;font-size:10px">(하이라이트 강조 있음)</span></span>
         <span style="margin-left:auto;font-weight:700;color:#374151">선택률 <span style="color:#7c3aed;font-size:15px;font-weight:900">6.9%</span></span>
       </div>
-      <div style="font-size:12px;color:#374151;margin-bottom:10px">9,572명 노출 → <strong>657명 전환</strong></div>
+      <div style="font-size:12px;color:#374151;margin-bottom:10px">9,572명 노출 → <strong>657명 전환</strong> <span style="color:#9ca3af;font-size:10px">(바텀시트 행동으로 PF0 전환된 회원, 행동 추적)</span></div>
       <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
         <span style="color:#6b7280">직접 (결제하기→PF0)</span>
         <span><strong style="color:#7c3aed">602명</strong> <span style="color:#9ca3af;margin-left:4px">91.6%</span></span>
@@ -537,7 +544,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
         <span>업셀링 + 넛지 OFF <span style="color:#9ca3af;font-size:10px">(강조 없음, 바텀시트만)</span></span>
         <span style="margin-left:auto;font-weight:700;color:#374151">선택률 <span style="color:#16a34a;font-size:15px;font-weight:900">7.0%</span></span>
       </div>
-      <div style="font-size:12px;color:#374151;margin-bottom:10px">9,708명 노출 → <strong>682명 전환</strong></div>
+      <div style="font-size:12px;color:#374151;margin-bottom:10px">9,708명 노출 → <strong>682명 전환</strong> <span style="color:#9ca3af;font-size:10px">(바텀시트 행동으로 PF0 전환된 회원, 행동 추적)</span></div>
       <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">
         <span style="color:#6b7280">직접 (결제하기→PF0)</span>
         <span><strong style="color:#16a34a">635명</strong> <span style="color:#9ca3af;margin-left:4px">93.1%</span></span>
