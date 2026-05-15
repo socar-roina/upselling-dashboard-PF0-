@@ -499,11 +499,15 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
 
   <!-- 노출 기준 PF0 수락 비율 (B·C 비교) -->
   <div class="section-label">업셀링 화면 본 회원 기준 PF0 선택 비율 (B·C 비교) <span class="tag tag-blue">화면을 실제 본 회원만 분모로 한 결과 · 약 7%</span> <span class="tag tag-warn">P1 회원 단위 (4/29~5/5)</span> <span class="tag tag-gray">강조 표시 유무가 선택률에 영향 미치는지 확인</span></div>
-  <div style="background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:14px;font-size:12px;color:#374151;line-height:1.6">
-    <strong style="color:#92400e">📌 위 25.6%와 아래 7%는 "같은 결과"를 다른 기준으로 본 것</strong> (둘 다 PF0 최종 예약 완료 결과)<br>
-    <span style="color:#6b7280">· <strong>25.6%</strong> → B군 <strong>전체 완료 예약</strong> 21,569건 중 PF0 선택 비율 (A군 21.1% 대비 +4.5%p 증가)<br>
-    · <strong>7%</strong> → B군 중 <strong>업셀링 화면을 실제 본 회원</strong>만 따로 보면 PF0 최종 예약 비율<br>
-    → 분모가 다를 뿐 둘 다 "최종 예약 완료" 결과 (시도 vs 완료의 차이가 아님)</span>
+  <div style="background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:11px 16px;margin-bottom:14px;font-size:12px;color:#374151;line-height:1.7">
+    <strong style="color:#92400e">📌 25.6%와 7%는 "같은 결과"를 다른 기준(분모)으로 본 것</strong> (둘 다 PF0 최종 예약 완료 결과)<br>
+    <span style="color:#6b7280">· <strong>25.6% (전체 기준)</strong>: B군에 배정된 <strong>모든 완료 예약 21,569건</strong> 중 PF0 선택 비율<br>
+    &nbsp;&nbsp; → "전체 완료 예약" = 비즈/법인 제외, 그룹에 배정된 회원의 반납 완료 예약 전부<br>
+    · <strong>7% (노출 기준)</strong>: B군 중 <strong>업셀링 화면을 실제 본 9,572명</strong>만 분모로 잡았을 때의 PF0 선택 비율 (P1)</span><br>
+    <span style="background:#fef3c7;border-radius:4px;padding:3px 8px;font-size:11px;color:#92400e;display:inline-block;margin-top:4px"><strong>💡 헤드라인 지표는 왜 +4.5%p인가?</strong></span><br>
+    <span style="color:#6b7280">· 전체 예약 대비 임팩트(=실제 회사 매출에 기여한 크기)를 측정해야 의미 있음<br>
+    · 4.5%p × 전체 예약 9,080건/일 = 일 약 408건의 신규 PF0 전환 (100% 배포 시)<br>
+    · 7%는 노출자 한정 비율이라 회사 전체 임팩트 환산에 직접 쓸 수 없음 (보조 지표)</span>
   </div>
   <div class="bc-compare-row">
     <div class="bc-card" style="border-top:3px solid #8b5cf6">
@@ -736,10 +740,47 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Pretendard', 'S
   </div>
 
   <!-- ─── REVENUE PROJECTION ─── -->
-  <div class="section-label">예상 매출 증분 효과 <span class="tag tag-blue">P2 실측 기반</span> <span class="tag tag-gray">100% 배포 환산</span></div>
+  <div class="section-label">매출 증분 효과 <span class="tag tag-warn">실험 기간 실측</span> <span class="tag tag-blue">+ 100% 배포 환산</span></div>
+
+  <!-- 실측: 실험 기간 동안 실제 추가 매출 -->
+  <div style="background:white;border-radius:12px;border:1px solid #e5e7eb;padding:18px 22px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04)">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <span style="font-size:13px;font-weight:800;color:#111827">실측: 실험 기간 동안 B+C군이 실제로 더 벌어들인 매출</span>
+      <span style="background:#fef3c7;color:#92400e;border-radius:3px;padding:2px 7px;font-size:10px;font-weight:700">P1+P2 합산 약 14.2일</span>
+    </div>
+    <div style="font-size:11px;color:#6b7280;margin-bottom:14px;line-height:1.55">
+      A군(업셀링 없음) 대비 B·C군(업셀링 있음)이 같은 기간 동안 실제로 더 벌어들인 보험 매출. 추정이 아닌 BQ 실측값.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+      <div style="background:#f5f3ff;border-radius:10px;padding:14px 18px;border-left:4px solid #8b5cf6">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px;background:#f3e8ff;color:#7e22ce">B군 (강조 있음)</span>
+        </div>
+        <div style="font-size:26px;font-weight:900;color:#7c3aed;line-height:1;margin-bottom:5px">약 1,930만원</div>
+        <div style="font-size:11px;color:#6b7280;line-height:1.5">P1 약 483만원 + P2 약 1,449만원<br>예약 1건당 P1 +296원 / P2 +672원</div>
+      </div>
+      <div style="background:#f0fdf4;border-radius:10px;padding:14px 18px;border-left:4px solid #22c55e">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px;background:#dcfce7;color:#166534">C군 (강조 없음)</span>
+        </div>
+        <div style="font-size:26px;font-weight:900;color:#16a34a;line-height:1;margin-bottom:5px">약 1,320만원</div>
+        <div style="font-size:11px;color:#6b7280;line-height:1.5">P1 약 302만원 + P2 약 1,021만원<br>예약 1건당 P1 +186원 / P2 +469원</div>
+      </div>
+    </div>
+    <div style="background:#f9fafb;border-radius:8px;padding:11px 14px;font-size:13px;color:#374151;border-left:3px solid #6b7280">
+      <strong style="color:#111827">B+C군 합산: 약 3,255만원</strong> <span style="color:#9ca3af;font-size:11px">실험 기간 동안 A군 대비 추가 매출</span><br>
+      <span style="color:#6b7280;font-size:11px">만약 같은 기간 동안 100% 배포했다면 (A군도 업셀링 봤다면) 약 4,900만원 추정</span>
+    </div>
+  </div>
+
+  <!-- 환산: 100% 배포 연환산 -->
   <div style="background:white;border-radius:12px;border:1px solid #e5e7eb;padding:18px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04)">
-    <div style="font-size:11px;color:#6b7280;margin-bottom:14px;line-height:1.5">
-      P2 실험 기간(5/6~5/13) 동안 예약 1건당 평균 보험 매출 상승분을 기준으로, 전체 사용자에게 배포한다고 가정해 단순 환산. <span style="color:#9ca3af">(연휴·시즌 영향 미반영)</span>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <span style="font-size:13px;font-weight:800;color:#111827">환산: 100% 배포 시 연 매출 증분 추정</span>
+      <span style="background:#dbeafe;color:#1e40af;border-radius:3px;padding:2px 7px;font-size:10px;font-weight:700">P2 1건당 상승분 × 일평균 9,080건 × 365일</span>
+    </div>
+    <div style="font-size:11px;color:#6b7280;margin-bottom:14px;line-height:1.55">
+      P2 실측치를 기준으로 전체 사용자에게 배포한다고 가정해 1년 매출로 환산. <span style="color:#9ca3af">(시즌·연휴·장기 예약 영향 미반영)</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:14px">
       <div style="background:#f5f3ff;border-radius:10px;padding:14px 18px;border-left:4px solid #8b5cf6">
